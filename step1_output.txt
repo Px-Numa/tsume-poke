@@ -1,0 +1,203 @@
+﻿p1 is RandomPlayerAI
+p2 is RandomPlayerAI
+|t:|1789431595
+|gametype|singles
+|player|p1|Bot 1||
+|player|p2|Bot 2||
+|gen|7
+|tier|[Gen 7] Custom Game
+|clearpoke
+|poke|p1|Typhlosion, L86, M|item
+|poke|p1|Jumpluff, L89, F|
+|poke|p1|Lickilicky, L89, F|item
+|poke|p1|Tentacruel, L83, F|item
+|poke|p1|Granbull, L90, M|item
+|poke|p1|Haxorus, L75, M|item
+|poke|p2|Togedemaru, L86, F|item
+|poke|p2|Chimecho, L95, F|item
+|poke|p2|Corsola, L96, M|item
+|poke|p2|Aerodactyl, L78, F|item
+|poke|p2|Hitmonchan, L88, M|item
+|poke|p2|Machamp, L84, M|item
+|teampreview
+|
+|t:|1789431595
+|teamsize|p1|6
+|teamsize|p2|6
+|start
+|switch|p1a: Typhlosion|Typhlosion, L86, M|274/274
+|switch|p2a: Togedemaru|Togedemaru, L86, F|252/252
+|turn|1
+|
+|t:|1789431595
+|move|p1a: Typhlosion|Fire Blast|p2a: Togedemaru
+|-supereffective|p2a: Togedemaru
+|-damage|p2a: Togedemaru|0 fnt
+|faint|p2a: Togedemaru
+|
+|upkeep
+|
+|t:|1789431595
+|switch|p2a: Chimecho|Chimecho, L95, F|296/296
+|turn|2
+|
+|t:|1789431595
+|move|p1a: Typhlosion|Fire Blast|p2a: Chimecho
+|-damage|p2a: Chimecho|121/296
+|move|p2a: Chimecho|Psychic|p1a: Typhlosion
+|-damage|p1a: Typhlosion|145/274
+|
+|-heal|p2a: Chimecho|139/296|[from] item: Leftovers
+|upkeep
+|turn|3
+|
+|t:|1789431595
+|move|p1a: Typhlosion|Fire Blast|p2a: Chimecho
+|-damage|p2a: Chimecho|0 fnt
+|faint|p2a: Chimecho
+|
+|upkeep
+|
+|t:|1789431595
+|switch|p2a: Hitmonchan|Hitmonchan, L88, M|231/231
+|turn|4
+|
+|t:|1789431595
+|move|p1a: Typhlosion|Fire Blast|p2a: Hitmonchan
+|-damage|p2a: Hitmonchan|60/231
+|move|p2a: Hitmonchan|Drain Punch|p1a: Typhlosion
+|debug|Iron Fist boost
+|-damage|p1a: Typhlosion|19/274
+|-heal|p2a: Hitmonchan|123/231|[from] drain|[of] p1a: Typhlosion
+|
+|-heal|p2a: Hitmonchan|137/231|[from] item: Leftovers
+|upkeep
+|turn|5
+|
+|t:|1789431595
+|move|p1a: Typhlosion|Fire Blast|p2a: Hitmonchan
+|-damage|p2a: Hitmonchan|0 fnt
+|faint|p2a: Hitmonchan
+|
+|upkeep
+|
+|t:|1789431595
+|switch|p2a: Corsola|Corsola, L96, M|280/280
+|turn|6
+|
+|t:|1789431595
+|move|p1a: Typhlosion|Fire Blast|p2a: Corsola
+|-resisted|p2a: Corsola
+|-damage|p2a: Corsola|242/280
+|move|p2a: Corsola|Scald|p1a: Typhlosion
+|-supereffective|p1a: Typhlosion
+|-damage|p1a: Typhlosion|0 fnt
+|faint|p1a: Typhlosion
+|
+|-heal|p2a: Corsola|259/280|[from] item: Leftovers
+|upkeep
+|
+|t:|1789431595
+|switch|p1a: Lickilicky|Lickilicky, L89, F|341/341
+|turn|7
+|
+|t:|1789431595
+|move|p1a: Lickilicky|Swords Dance|p1a: Lickilicky
+|-boost|p1a: Lickilicky|atk|2
+|move|p2a: Corsola|Recover|p2a: Corsola
+|-heal|p2a: Corsola|280/280
+|
+|upkeep
+|turn|8
+|
+|t:|1789431595
+|move|p1a: Lickilicky|Swords Dance|p1a: Lickilicky
+|-boost|p1a: Lickilicky|atk|2
+|move|p2a: Corsola|Recover||[still]
+|-fail|p2a: Corsola|heal
+|debug|move failed because it did nothing
+|
+|upkeep
+|turn|9
+|
+|t:|1789431595
+|move|p1a: Lickilicky|Body Slam|p2a: Corsola
+|-resisted|p2a: Corsola
+|-crit|p2a: Corsola
+|-damage|p2a: Corsola|108/280
+|-status|p2a: Corsola|par
+|cant|p2a: Corsola|par
+|
+|-heal|p2a: Corsola|125/280 par|[from] item: Leftovers
+|upkeep
+|turn|10
+|
+|t:|1789431595
+|move|p1a: Lickilicky|Body Slam|p2a: Corsola
+|-resisted|p2a: Corsola
+|-damage|p2a: Corsola|4/280 par
+|move|p2a: Corsola|Stealth Rock|p1a: Lickilicky
+|-sidestart|p1: Bot 1|move: Stealth Rock
+|
+|-heal|p2a: Corsola|21/280 par|[from] item: Leftovers
+|upkeep
+|turn|11
+|
+|t:|1789431595
+|move|p1a: Lickilicky|Power Whip|p2a: Corsola|[miss]
+|-miss|p1a: Lickilicky|p2a: Corsola
+|move|p2a: Corsola|Scald|p1a: Lickilicky
+|-crit|p1a: Lickilicky
+|-damage|p1a: Lickilicky|238/341
+|
+|-heal|p1a: Lickilicky|259/341|[from] item: Leftovers
+|-heal|p2a: Corsola|38/280 par|[from] item: Leftovers
+|upkeep
+|turn|12
+|
+|t:|1789431595
+|move|p1a: Lickilicky|Body Slam|p2a: Corsola
+|-resisted|p2a: Corsola
+|-damage|p2a: Corsola|0 fnt
+|faint|p2a: Corsola
+|
+|-heal|p1a: Lickilicky|280/341|[from] item: Leftovers
+|upkeep
+|
+|t:|1789431595
+|switch|p2a: Aerodactyl|Aerodactyl, L78, F|253/253
+|-ability|p2a: Aerodactyl|Unnerve
+|turn|13
+|
+|t:|1789431595
+|move|p2a: Aerodactyl|Earthquake|p1a: Lickilicky
+|-damage|p1a: Lickilicky|225/341
+|move|p1a: Lickilicky|Power Whip|p2a: Aerodactyl
+|-damage|p2a: Aerodactyl|0 fnt
+|faint|p2a: Aerodactyl
+|
+|-heal|p1a: Lickilicky|246/341|[from] item: Leftovers
+|upkeep
+|
+|t:|1789431595
+|switch|p2a: Machamp|Machamp, L84, M|288/288
+|turn|14
+|
+|t:|1789431595
+|move|p2a: Machamp|Knock Off|p1a: Lickilicky
+|-damage|p1a: Lickilicky|138/341
+|-enditem|p1a: Lickilicky|Leftovers|[from] move: Knock Off|[of] p2a: Machamp
+|move|p1a: Lickilicky|Body Slam|p2a: Machamp
+|-damage|p2a: Machamp|15/288
+|
+|upkeep
+|turn|15
+|
+|t:|1789431595
+|move|p2a: Machamp|Knock Off|p1a: Lickilicky
+|-damage|p1a: Lickilicky|65/341
+|move|p1a: Lickilicky|Power Whip|p2a: Machamp
+|-damage|p2a: Machamp|0 fnt
+|faint|p2a: Machamp
+|
+|win|Bot 1

@@ -1,0 +1,19 @@
+# Pokemon Showdown 本体（約250MB）。clone し直せるので管理しない。
+# 使っている commit は README.md に書いてある。
+pokemon-showdown/
+
+# 参照している先行研究の資料（他の方の論文PDFと、GPLv3 の KomoringHeights）
+refs/
+
+# 発表資料
+*.pptx
+
+# Claude Code 用の指示書と研究ノート
+CLAUDE.md
+PLAN.md
+PS_KNOWHOW.md
+e2.SolverDescription.md
+日本語利用規約.md
+
+# Node
+node_modules/
