@@ -19,17 +19,25 @@ const { Solver, bestDefense, bestReplacement } = require('./solver');
 
 const PUZZLES = path.join(__dirname, 'puzzles.json');
 
+// 画面に出す名前は names_ja.json（build_names_ja.js で作る）の日本語名にしている。
+// 表がない場合や、表に載っていない名前は、PS の英語名をそのまま出すようにした。
+const NAMES_JA = path.join(__dirname, 'names_ja.json');
+const ja = fs.existsSync(NAMES_JA) ? JSON.parse(fs.readFileSync(NAMES_JA, 'utf8')) : { species: {}, moves: {}, types: {} };
+const speciesName = id => ja.species[id] || speciesName(id);
+const moveName = id => ja.moves[id] || E.moveInfo(id).name;
+const typeName = t => ja.types[t] || t;
+
 function monLine(mon, isActive) {
 	const info = E.speciesInfo(mon.species);
 	const mark = isActive ? '[場]' : '    ';
 	const hp = mon.hp > 0 ? `HP ${mon.hp}/${info.stats.hp}` : 'ひんし';
-	return `${mark} ${info.name} (${info.types.join('/')})  ${hp}  素早さ ${info.stats.spe}`;
+	return `${mark} ${speciesName(mon.species)} (${info.types.map(typeName).join('/')})  ${hp}  素早さ ${info.stats.spe}`;
 }
 
 function moveLabel(moveId) {
 	const m = E.moveInfo(moveId);
 	const pri = m.priority ? `  優先度 ${m.priority > 0 ? '+' : ''}${m.priority}` : '';
-	return `${m.name} (${m.type}・${m.category === 'Physical' ? '物理' : '特殊'}・威力 ${m.basePower}${pri})`;
+	return `${moveName(moveId)} (${typeName(m.type)}・${m.category === 'Physical' ? '物理' : '特殊'}・威力 ${m.basePower}${pri})`;
 }
 
 // ポケモン mon の技ごとに、相手の場のポケモンへのダメージ（Ver1 の固定乱数での値）を添えて表示している。
@@ -40,17 +48,20 @@ function movesWithDamage(state, sideIndex, mon) {
 	return mon.moves.map(id => {
 		const d = E.calcDamage(mon.species, foe.species, id, E.rollFor(sideIndex));
 		const pct = (100 * d / foeMax).toFixed(1);
-		return `        ${moveLabel(id)}  → ${E.speciesInfo(foe.species).name} に ${d} ダメージ（${pct}%）`;
+		return `        ${moveLabel(id)}  → ${speciesName(foe.species)} に ${d} ダメージ（${pct}%）`;
 	});
 }
 
 function showSide(state, sideIndex, title) {
 	const out = [title];
 	const side = state.sides[sideIndex];
-	side.mons.forEach((m, i) => {
+	// 場のポケモンを一番上に置き、控えはその下に元の並びのまま続けている。
+	const order = [side.active, ...side.mons.map((_, i) => i).filter(i => i !== side.active)];
+	for (const i of order) {
+		const m = side.mons[i];
 		out.push(monLine(m, i === side.active));
 		if (m.hp > 0) out.push(...movesWithDamage(state, sideIndex, m));
-	});
+	}
 	return out;
 }
 
@@ -65,19 +76,19 @@ function showState(state) {
 function actionLabel(state, sideIndex, a) {
 	const side = state.sides[sideIndex];
 	if (a.type === 'move') return moveLabel(E.activeMon(side).moves[a.index]);
-	return `交代 → ${E.speciesInfo(side.mons[a.index].species).name}`;
+	return `交代 → ${speciesName(side.mons[a.index].species)}`;
 }
 
 function showLog(log) {
 	for (const ev of log) {
 		const who = ev.side === 0 ? 'あなた' : '相手';
 		if (ev.kind === 'switch') {
-			console.log(`  ${who}は ${E.speciesInfo(ev.from).name} を引っ込めて ${E.speciesInfo(ev.to).name} を出した`);
+			console.log(`  ${who}は ${speciesName(ev.from)} を引っ込めて ${speciesName(ev.to)} を出した`);
 		} else if (ev.kind === 'move') {
-			console.log(`  ${who}の ${E.speciesInfo(ev.user).name} の ${E.moveInfo(ev.move).name}！ ` +
-				`${E.speciesInfo(ev.target).name} に ${ev.damage} ダメージ（残り HP ${ev.hpLeft}）`);
+			console.log(`  ${who}の ${speciesName(ev.user)} の ${moveName(ev.move)}！ ` +
+				`${speciesName(ev.target)} に ${ev.damage} ダメージ（残り HP ${ev.hpLeft}）`);
 		} else if (ev.kind === 'faint') {
-			console.log(`  ${who}の ${E.speciesInfo(ev.mon).name} は倒れた`);
+			console.log(`  ${who}の ${speciesName(ev.mon)} は倒れた`);
 		}
 	}
 }
@@ -101,11 +112,11 @@ function showAnswer(puzzle) {
 		state = def.result.state;
 		if (def.result.replace === 1) {
 			const rep = bestReplacement(solver, state, remaining - 1);
-			console.log(`  相手は ${E.speciesInfo(state.sides[1].mons[rep.index].species).name} を出した`);
+			console.log(`  相手は ${speciesName(state.sides[1].mons[rep.index].species)} を出した`);
 			state = E.applyReplacement(state, 1, rep.index);
 		} else if (def.result.replace === 0) {
 			const i = E.replacementChoices(state, 0).find(j => solver.winWithin(E.applyReplacement(state, 0, j), remaining - 1));
-			console.log(`  あなたは ${E.speciesInfo(state.sides[0].mons[i].species).name} を出す`);
+			console.log(`  あなたは ${speciesName(state.sides[0].mons[i].species)} を出す`);
 			state = E.applyReplacement(state, 0, i);
 		}
 	}
@@ -188,11 +199,11 @@ async function attempt(rl, puzzle) {
 		remaining--;
 		if (def.result.replace === 1) {
 			const rep = bestReplacement(solver, state, remaining);
-			console.log(`相手は ${E.speciesInfo(state.sides[1].mons[rep.index].species).name} を出した`);
+			console.log(`相手は ${speciesName(state.sides[1].mons[rep.index].species)} を出した`);
 			state = E.applyReplacement(state, 1, rep.index);
 		} else if (def.result.replace === 0) {
 			const choices = E.replacementChoices(state, 0);
-			choices.forEach((j, i) => console.log(`  ${i + 1}. ${E.speciesInfo(state.sides[0].mons[j].species).name}`));
+			choices.forEach((j, i) => console.log(`  ${i + 1}. ${speciesName(state.sides[0].mons[j].species)}`));
 			const j = choices[await askIndex(rl, '次に出すポケモンは？ > ', choices.length)];
 			state = E.applyReplacement(state, 0, j);
 			if (!solver.winWithin(state, remaining)) {
@@ -208,7 +219,7 @@ async function main() {
 	const args = process.argv.slice(2);
 	if (args.includes('--list')) {
 		for (const p of puzzles) {
-			const names = s => s.mons.map(m => E.speciesInfo(m.species).name).join(', ');
+			const names = s => s.mons.map(m => speciesName(m.species)).join(', ');
 			console.log(`id ${p.id}: ${p.length}ターン  あなた[${names(p.state.sides[0])}] 相手[${names(p.state.sides[1])}]`);
 		}
 		return;
