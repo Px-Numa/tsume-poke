@@ -1,15 +1,14 @@
 'use strict';
-// 詰めポケ Ver1 の出題用 CLI。
+// 出題用の CLI。
 //
 // 実行方法：
-//   node tsumepoke/v1/play.js            … いちばん長い問題の中から1問を選んで出題する
-//   node tsumepoke/v1/play.js 12         … puzzles.json の id 12 の問題を出題する
-//   node tsumepoke/v1/play.js 12 --answer … 解答の手順（相手は最長の受け）を表示して終わる
-//   node tsumepoke/v1/play.js --list      … 問題の一覧（id とターン数）を表示する
+//   node tsumepoke/v1/play.js             … 一番長い問題から1問を選んで出題
+//   node tsumepoke/v1/play.js 12          … id 12 の問題を出題
+//   node tsumepoke/v1/play.js 12 --answer … 解答の手順（相手は最長の受け）を表示
+//   node tsumepoke/v1/play.js --list      … 問題の一覧（id とターン数）を表示
 //
-// 出題の流れは面談議事録（2026-08-19）のとおりにしてある。
-// 回答者が手を選ぶと、相手は回答者の勝ちを一番遅らせる手（勝ちを逃れられるならその手）を選び、次のターンへ進む。
-// 回答者が勝てば正解、決められたターン数で勝てなくなったら失敗として最初からやり直す。
+// 回答者が手を選ぶと、相手は回答者の勝ちを一番遅らせる手（逃れられるならその手）を選んで次のターンへ進む。
+// 勝てば正解。決められたターン数で勝てなくなったら失敗で、最初からやり直す。
 
 const fs = require('fs');
 const path = require('path');
@@ -19,11 +18,10 @@ const { Solver, bestDefense, bestReplacement } = require('./solver');
 
 const PUZZLES = path.join(__dirname, 'puzzles.json');
 
-// 画面に出す名前は names_ja.json（build_names_ja.js で作る）の日本語名にしている。
-// 表がない場合や、表に載っていない名前は、PS の英語名をそのまま出すようにした。
+// 名前は names_ja.json（build_names_ja.js で作る）の日本語名で表示する。表にない名前は PS の英語名のまま。
 const NAMES_JA = path.join(__dirname, 'names_ja.json');
 const ja = fs.existsSync(NAMES_JA) ? JSON.parse(fs.readFileSync(NAMES_JA, 'utf8')) : { species: {}, moves: {}, types: {} };
-const speciesName = id => ja.species[id] || speciesName(id);
+const speciesName = id => ja.species[id] || E.speciesInfo(id).name;
 const moveName = id => ja.moves[id] || E.moveInfo(id).name;
 const typeName = t => ja.types[t] || t;
 
@@ -40,8 +38,8 @@ function moveLabel(moveId) {
 	return `${moveName(moveId)} (${typeName(m.type)}・${m.category === 'Physical' ? '物理' : '特殊'}・威力 ${m.basePower}${pri})`;
 }
 
-// ポケモン mon の技ごとに、相手の場のポケモンへのダメージ（Ver1 の固定乱数での値）を添えて表示している。
-// 控えのポケモンの技も、交代して出てきたときの参考になるように同じ相手への値で示すことにした。
+// mon の技ごとに、相手の場のポケモンへのダメージ（固定乱数での値）を添えた行を返す。
+// 控えのポケモンも、交代したときの参考に同じ相手への値を出す。
 function movesWithDamage(state, sideIndex, mon) {
 	const foe = E.activeMon(state.sides[1 - sideIndex]);
 	const foeMax = E.speciesInfo(foe.species).stats.hp;
@@ -55,7 +53,7 @@ function movesWithDamage(state, sideIndex, mon) {
 function showSide(state, sideIndex, title) {
 	const out = [title];
 	const side = state.sides[sideIndex];
-	// 場のポケモンを一番上に置き、控えはその下に元の並びのまま続けている。
+	// 場のポケモンを一番上に、控えはその下に元の並びで出す。
 	const order = [side.active, ...side.mons.map((_, i) => i).filter(i => i !== side.active)];
 	for (const i of order) {
 		const m = side.mons[i];
@@ -93,14 +91,14 @@ function showLog(log) {
 	}
 }
 
-// 解答の手順を表示している。相手は毎ターン、勝ちを一番遅らせる受けを選ぶものとした。
+// 解答の手順を表示する。相手は毎ターン最長の受けを選ぶ。
 function showAnswer(puzzle) {
 	const solver = new Solver();
 	let state = puzzle.state;
 	let remaining = puzzle.length;
 	for (let turn = 1; remaining > 0; turn++, remaining--) {
-		// 各ターンの正解の手は、残りターン数以内に勝てる手のうち最初に見つかったものにしている。
-		// 初手は唯一解であることを生成時に確かめてあり、2ターン目以降は複数あってもよい、という定義になっている。
+		// 残りターン数以内に勝てる手のうち、最初に見つかった手を出す。
+		// 唯一解なのは初手だけで、2ターン目以降は複数ありうる。
 		const a1 = E.legalActions(state, 0).find(a => solver.actionWinsWithin(state, a, remaining));
 		const def = bestDefense(solver, state, a1, remaining);
 		console.log(`${turn}ターン目：あなた「${actionLabel(state, 0, a1)}」／相手「${actionLabel(state, 1, def.action)}」`);
@@ -122,8 +120,7 @@ function showAnswer(puzzle) {
 	}
 }
 
-// 入力を1行ずつ受け取る仕組みにしてある。readline/promises の question では、
-// パイプで流し込んだ入力のうち、質問を出す前に届いた行が捨てられてしまったので、自分で行をためておくことにした。
+// 入力を1行ずつ読む。readline/promises の question はパイプで渡すと質問前に届いた行を捨てるので、自前でためておく。
 function makeLineReader() {
 	const rl = readline.createInterface({ input: process.stdin });
 	const lines = [];
@@ -145,8 +142,8 @@ function makeLineReader() {
 	};
 }
 
-// 正解以外の初手について、相手がどう受ければ決められたターン数で勝てなくなるかを表示している。
-// 相手が交代でかわす問題（例：毒技に鋼タイプを合わせる）では、この表示を見ると狙いがわかるようにした。
+// 正解以外の初手ごとに、どう受けられると決められたターン数で勝てなくなるかを表示する。
+// 交代でかわされる問題（毒技に鋼タイプを合わせるなど）の狙いが分かる。
 function showRefutations(puzzle) {
 	const solver = new Solver();
 	const cap = puzzle.length + 2;
@@ -175,7 +172,7 @@ async function askIndex(rl, prompt, n) {
 	}
 }
 
-// 1回分の挑戦を進めている。勝てば true、失敗すれば false を返す。
+// 1回分の挑戦。勝てば true、失敗すれば false を返す。
 async function attempt(rl, puzzle) {
 	const solver = new Solver();
 	let state = puzzle.state;
@@ -191,7 +188,7 @@ async function attempt(rl, puzzle) {
 		showLog(def.result.log);
 		if (def.result.winner === 0) return true;
 		if (def.result.winner === 1 || def.distance > remaining - 1 + 0) {
-			// distance はこのターンのあとに必要なターン数なので、残り remaining - 1 ターンに収まらなければ失敗になる。
+			// distance はこのターンのあとに必要なターン数。残り remaining - 1 ターンに収まらなければ失敗。
 			if (def.result.winner !== 1) console.log(`→ この手では、残り ${remaining - 1} ターン以内に確実に勝つことができなくなった`);
 			return false;
 		}

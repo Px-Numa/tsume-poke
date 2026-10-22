@@ -1,13 +1,13 @@
 'use strict';
 // engine.js の1ターン分の処理（行動の順番、ダメージ、倒れたときの処理、交代）が、
-// PS 本体で同じターンを動かした結果と一致するかを確かめるスクリプト。
+// PS で同じターンを動かした結果と一致するかを調べる。
 // 実行方法：node tsumepoke/v1/verify_turn.js [局面の数] [乱数の種]
 //
-// PS 側では、Ver1 と同じ扱いになるように乱数の関数を差し替えている。
-//   randomizer：技を出した側が p1 なら乱数 85、p2 なら乱数 100 で計算する
-//   randomChance：命中の判定（確率 25% 以上）は必ず当たり、急所の判定（1/24 など）は必ず外れる
+// PS 側の乱数の関数をエンジンに合わせて差し替える。
+//   randomizer：技を出した側が p1 なら乱数 85、p2 なら 100
+//   randomChance：命中の判定（確率 25% 以上）は必ず当たり、急所の判定（1/24 など）は必ず外れ
 //   random：追加効果の判定（random(100) < 確率）が必ず外れるように、取りうる最大の値を返す
-// 素早さが同じで技の優先度も同じ組み合わせは、PS では順番が乱数で決まるので比較から外した。
+// 優先度も素早さも同じ組み合わせは、PS では順番が乱数で決まるので比べない。
 
 const path = require('path');
 const { Battle } = require(path.join(__dirname, '..', '..', 'pokemon-showdown'));
@@ -57,7 +57,7 @@ for (let t = 0; t < N; t++) {
 		return list[rand(list.length)];
 	});
 
-	// 両者が技を出し、優先度も素早さも同じ場合は、PS の順番が乱数になるので比べない。
+	// 両者が技を出し、優先度も素早さも同じならスキップ。
 	if (acts[0].type === 'move' && acts[1].type === 'move') {
 		const pri = s => E.moveInfo(state.sides[s].mons[0].moves[acts[s].index]).priority;
 		const spe = s => E.speciesInfo(state.sides[s].mons[0].species).stats.spe;
@@ -84,7 +84,7 @@ for (let t = 0; t < N; t++) {
 	battle.makeChoices(choiceString(acts[0]), choiceString(acts[1]));
 	const mine = E.resolveTurn(state, acts);
 
-	// 比べるのは、全員の残り HP と場にいるポケモンと勝敗にしている。
+	// 全員の残り HP、場のポケモン、勝敗を比べる。
 	const psHp = [0, 1].map(s => state.sides[s].mons.map((_, i) => battle.sides[s].pokemon.find(p => p.name === (s ? 'b' : 'a') + i).hp));
 	const myHp = [0, 1].map(s => mine.state.sides[s].mons.map(m => m.hp));
 	const psActive = [0, 1].map(s => Number(battle.sides[s].active[0].name.slice(1)));

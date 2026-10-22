@@ -1,9 +1,9 @@
 'use strict';
-// engine.js のダメージ計算が、PS 本体の getDamage と一致するかを確かめるスクリプト。
+// engine.js のダメージ計算が PS の getDamage と一致するかを調べる。
 // 実行方法：node tsumepoke/v1/verify_damage.js [組み合わせの数]
 //
-// PS の Battle を作り、ダメージ乱数を 85 または 100 に固定し、急所が出ないようにしてから getDamage を呼んでいる。
-// 特性は 'No Ability'、持ち物はなし、性格は補正なしの Hardy にして、Ver1 と同じ条件にそろえた。
+// PS の Battle を作り、ダメージ乱数を 85 か 100 に固定、急所なしにして getDamage を呼ぶ。
+// 条件をエンジンに合わせるため、特性は 'No Ability'、持ち物なし、性格は Hardy（補正なし）にする。
 
 const path = require('path');
 const { Battle } = require(path.join(__dirname, '..', '..', 'pokemon-showdown'));
@@ -14,7 +14,7 @@ const N = Number(process.argv[2] || 3000);
 const movePool = buildMovePool();
 const speciesPool = buildSpeciesPool(movePool);
 
-// 再現できるように、乱数は seed つきの簡単な線形合同法で作っている。
+// 再現できるように seed つきの線形合同法を使う。
 let seed = Number(process.argv[3] || 12345);
 function rand(n) {
 	seed = (seed * 1103515245 + 12345) % 2147483648;
@@ -41,7 +41,7 @@ for (let i = 0; i < N; i++) {
 	battle.setPlayer('p1', { name: 'A', team: [makeSet(a.id, [moveId])] });
 	battle.setPlayer('p2', { name: 'B', team: [makeSet(d.id, ['tackle'])] });
 	battle.makeChoices('team 1', 'team 1');
-	// 乱数の値を固定し、急所の判定（randomChance）が常に外れるようにした。
+	// 乱数を固定し、急所の判定（randomChance）は常に外れにする。
 	battle.randomizer = base => Math.trunc(Math.trunc(base * roll) / 100);
 	battle.randomChance = () => false;
 	const source = battle.p1.active[0];

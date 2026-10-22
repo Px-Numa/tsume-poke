@@ -1,23 +1,22 @@
 'use strict';
-// 詰めポケ Ver1 の対戦エンジン（PS を参考にした自作の簡略モデル）。
+// 対戦エンジン。PS を参考にした簡略版で、乱数は使わない。
 //
-// Ver1 のルールでは乱数が1つも残らないようにしてある。
-// 命中は常に100%、急所は出ない、確率で起こる追加効果は起こらない、という扱いにした。
-// ダメージの乱数は、出題者側（p1）の技は最低値（85）、相手（p2）の技は最高値（100）に固定している。
-// 素早さが同じときは p2 が先に動くことにして、p1 にとって不利な側へ倒すようにした。
+// 命中は常に100%、急所なし、確率で起こる追加効果は起こらないものとする。
+// ダメージ乱数は p1（回答者）の技を最低値の 85、p2（相手）の技を最高値の 100 に固定する。
+// 素早さが同じなら p2 が先に動く。どちらも p1 に不利な側に寄せている。
 // 特性・持ち物・状態異常・能力ランク・テラスタルは扱わない。
 //
-// 局面は JSON にそのまま書ける普通のオブジェクトで表している。
+// 局面は JSON にそのまま書けるオブジェクトで持つ。
 //   { sides: [ { active: 0, mons: [ { species: 'garchomp', moves: ['earthquake', ...], hp: 120 } ] }, {...} ] }
-// sides[0] が p1（回答者）、sides[1] が p2（相手）にあたる。
-// 倒れたポケモンは hp 0 のまま mons に残しておき、交代先の候補から外すことにした。
+// sides[0] が p1、sides[1] が p2。
+// 倒れたポケモンは hp 0 のまま mons に残し、交代先の候補から外す。
 
 const { dex, LEVEL, calcStats } = require('./data');
 
 const P1_ROLL = 85;
 const P2_ROLL = 100;
 
-// 種族ごとの能力値とタイプは何度も使うので、ここに覚えておくことにした。
+// 種族ごとの能力値とタイプは何度も使うのでキャッシュしておく。
 const speciesCache = new Map();
 function speciesInfo(id) {
 	let info = speciesCache.get(id);
@@ -41,28 +40,27 @@ function moveInfo(id) {
 	return move;
 }
 
-// PS の Battle.modify と同じ丸め方で、value に倍率を掛けている（4096 分の何倍、という整数計算）。
+// value に倍率を掛ける。丸め方は PS の Battle.modify と同じ（4096 分率の整数計算）。
 function psModify(value, multiplier) {
 	const tr = Math.trunc;
 	const modifier = tr(multiplier * 4096);
 	return tr((tr(value * modifier) + 2048 - 1) / 4096);
 }
 
-// attacker が defender に moveId の技を当てたときのダメージを返している。
-// 計算の順番は PS の getDamage と modifyDamage（sim/battle-actions.ts）に合わせた。
-// roll はダメージ乱数の値で、85〜100 のどれか1つを渡す形にしてある。
+// attacker が defender に moveId の技を当てたときのダメージを返す。roll はダメージ乱数（85〜100）。
+// 計算の順番は PS の getDamage と modifyDamage（sim/battle-actions.ts）に合わせている。
 function calcDamage(attackerSpecies, defenderSpecies, moveId, roll) {
 	const tr = Math.trunc;
 	const move = moveInfo(moveId);
 	const atk = speciesInfo(attackerSpecies);
 	const def = speciesInfo(defenderSpecies);
 
-	// タイプで無効になる組み合わせ（例：じめん技をひこうタイプに当てる）は、ダメージ 0 として扱っている。
+	// タイプで無効（じめん技をひこうタイプに当てた場合など）なら 0。
 	if (!dex.getImmunity(move.type, def.types)) return 0;
 
 	const physical = move.category === 'Physical';
 	const attack = physical ? atk.stats.atk : atk.stats.spa;
-	// サイコショックのように、特殊技でも相手の防御で計算する技は overrideDefensiveStat を持っている。
+	// サイコショックのように特殊技でも防御で受ける技は overrideDefensiveStat を持つ。
 	const defenseStat = move.overrideDefensiveStat || (physical ? 'def' : 'spd');
 	const defense = def.stats[defenseStat];
 
@@ -89,19 +87,19 @@ function aliveCount(side) {
 	return side.mons.filter(m => m.hp > 0).length;
 }
 
-// 局面を深く複製している。局面は小さいので JSON を経由しても十分に速い。
+// 局面を深くコピーする。局面は小さいので JSON 経由でも十分速い。
 function cloneState(state) {
 	return JSON.parse(JSON.stringify(state));
 }
 
-// 置換表のキーとして、手番の局面を表す文字列を作っている。
-// 技の並びはひとつの問題の中では変わらないので、キーには種族と HP と場のポケモンだけを入れた。
+// 置換表のキーにする文字列を返す。
+// 技の並びは1つの問題の中で変わらないので、場のポケモンと種族と HP だけを入れる。
 function stateKey(state) {
 	return state.sides.map(s => s.active + ':' + s.mons.map(m => m.species + '=' + m.hp).join(',')).join('|');
 }
 
-// ターンの最初に選べる行動の一覧を返している。
-// 技は { type: 'move', index }、交代は { type: 'switch', index }（index は mons の中の位置）という形にした。
+// ターンの最初に選べる行動の一覧を返す。
+// 技は { type: 'move', index }、交代は { type: 'switch', index }（index は mons の中の位置）。
 function legalActions(state, sideIndex) {
 	const side = state.sides[sideIndex];
 	const actions = [];
@@ -113,7 +111,7 @@ function legalActions(state, sideIndex) {
 	return actions;
 }
 
-// 倒れたあとに場に出せるポケモンの位置の一覧を返している。
+// 倒れたあとに場に出せるポケモンの位置の一覧を返す。
 function replacementChoices(state, sideIndex) {
 	const side = state.sides[sideIndex];
 	const choices = [];
@@ -121,18 +119,17 @@ function replacementChoices(state, sideIndex) {
 	return choices;
 }
 
-// 1ターン分の処理をしている。元の state は書き換えず、新しい局面を返すようにした。
-// 戻り値は { state, winner, replace, log } で、それぞれの意味は次のとおり。
-//   winner: 決着したら勝った側の番号（0 か 1）、決着していなければ null
-//   replace: 倒れたポケモンの代わりを選ぶ必要がある側の番号、なければ null
+// 1ターン分を処理する。元の state は書き換えず、新しい局面を返す。
+// 戻り値は { state, winner, replace, log }。
+//   winner: 勝った側の番号（0 か 1）。決着していなければ null
+//   replace: 倒れたポケモンの代わりを選ぶ側の番号。なければ null
 //   log: 表示用の出来事の列
-// Ver1 では反動や天候のダメージがないので、1ターンに倒れるのは多くても1体になる。
-// 先に動いた側が相手を倒すと、倒れた側の技は出ないからである。
+// 反動や天候のダメージがないので、1ターンに倒れるのは多くても1体（倒された側の技は出ない）。
 function resolveTurn(state, actions) {
 	const next = cloneState(state);
 	const log = [];
 
-	// 交代は技より先に処理している。特性や持ち物がないので、両者の交代の順番で結果は変わらない。
+	// 交代は技より先。特性や持ち物がないので、両者の交代の順番で結果は変わらない。
 	for (const s of [0, 1]) {
 		const a = actions[s];
 		if (a.type === 'switch') {
@@ -142,8 +139,7 @@ function resolveTurn(state, actions) {
 		}
 	}
 
-	// 技を出す順番は、優先度が高いほうを先にして、同じなら素早さが高いほうを先にした。
-	// 素早さも同じなら p2 を先にしている（p1 にとって不利な側を選ぶ方針）。
+	// 技の順番は優先度、素早さの順。素早さも同じなら p2 が先。
 	const movers = [0, 1].filter(s => actions[s].type === 'move');
 	const priorityOf = s => moveInfo(activeMon(next.sides[s]).moves[actions[s].index]).priority;
 	const speedOf = s => speciesInfo(activeMon(next.sides[s]).species).stats.spe;
@@ -173,7 +169,7 @@ function resolveTurn(state, actions) {
 	return { state: next, winner, replace, log };
 }
 
-// 倒れたポケモンの代わりを場に出した局面を返している。
+// 倒れたポケモンの代わりを場に出した局面を返す。
 function applyReplacement(state, sideIndex, monIndex) {
 	const next = cloneState(state);
 	next.sides[sideIndex].active = monIndex;
