@@ -15,6 +15,8 @@
 | `node tsumepoke/v1/play.js 608` | id 608 の問題を出題する |
 | `node tsumepoke/v1/play.js 608 --answer` | 解答の手順と、正解以外の初手への相手の受けを表示する |
 | `node tsumepoke/v1/play.js --list` | 問題の一覧を表示する |
+| `node tsumepoke/v1/rate.js 1` | ターン数ごとに10問を乱数の種1で選び、シャッフルした順に出題して、面白さ・難しさ・意外性を5段階で記録する。1問終わるごとに `ratings_1.json` と `ratings_1.csv` に保存する。途中でやめても、次は続きから出す |
+| `node tsumepoke/v1/rate.js 1 --csv` | 出題はせず、`ratings_1.json` から `ratings_1.csv` を作り直す（CSV を消したときなどに使う） |
 | `node tsumepoke/v1/verify_damage.js 20000 777` | ダメージ計算を PS 本体と比べる |
 | `node tsumepoke/v1/verify_turn.js 2000 7` | 1ターンの処理を PS 本体と比べる |
 | `node tsumepoke/v1/build_names_ja.js <CSVのフォルダ>` | PokeAPI の CSV から日本語名の表 `names_ja.json` を作り直す（CSV の入手先はスクリプトの先頭に書いた） |
@@ -29,6 +31,7 @@
 | `solver.js` | 確定勝ちの判定、最短ターン数、初手の唯一性、相手の最長の受け |
 | `generate.js` | ランダム生成と延長法で問題を作る |
 | `play.js` | 出題用の CLI |
+| `rate.js`, `ratings_<種>.json`, `ratings_<種>.csv` | 問題を解いて評価する CLI と、その記録。選んだ問題の局面も記録に写すので、`puzzles.json` を作り直しても評価は残る。延長法の同じ系列（元をたどると同じランダム生成の問題になるもの）からは1問しか選ばない |
 | `verify_damage.js`, `verify_turn.js` | PS 本体との一致を確かめるスクリプト |
 | `puzzles.json` | 作った問題（`generate.js` の出力） |
 | `build_names_ja.js`, `names_ja.json` | 出題画面で使う日本語名の表と、それを作るスクリプト。表に載っていない名前は英語名で表示する |

@@ -1,0 +1,3933 @@
+{
+ "seed": 1,
+ "per": 10,
+ "createdAt": "2026-10-26T06:00:56.678Z",
+ "items": [
+  {
+   "order": 1,
+   "id": 892,
+   "length": 3,
+   "puzzle": {
+    "id": 892,
+    "length": 3,
+    "solution": {
+     "type": "move",
+     "index": 0
+    },
+    "detourMoves": 0,
+    "origin": {
+     "method": "extend",
+     "from": 530,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "granbull",
+         "moves": [
+          "earthquake",
+          "playrough"
+         ],
+         "hp": 28
+        },
+        {
+         "species": "sandyshocks",
+         "moves": [
+          "earthpower",
+          "thunderbolt"
+         ],
+         "hp": 58
+        }
+       ]
+      },
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "mudsdale",
+         "moves": [
+          "earthquake",
+          "stoneedge"
+         ],
+         "hp": 126
+        },
+        {
+         "species": "weezinggalar",
+         "moves": [
+          "fireblast",
+          "gunkshot",
+          "strangesteam"
+         ],
+         "hp": 38
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 96,
+    "fun": 2,
+    "difficulty": 2,
+    "comment": "目の前のポケモンに一番大きいダメージを与えるワザを選んでいけばよいだけなので、つまらない",
+    "ratedAt": "2026-10-26T06:03:46.161Z",
+    "surprise": 1
+   }
+  },
+  {
+   "order": 2,
+   "id": 1277,
+   "length": 5,
+   "puzzle": {
+    "id": 1277,
+    "length": 5,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 1,
+    "origin": {
+     "method": "extend",
+     "from": 1014,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "braviaryhisui",
+         "moves": [
+          "heatwave",
+          "psychic",
+          "vacuumwave"
+         ],
+         "hp": 141
+        },
+        {
+         "species": "arceusdark",
+         "moves": [
+          "dazzlinggleam",
+          "sludgebomb"
+         ],
+         "hp": 84
+        },
+        {
+         "species": "oinkolognef",
+         "moves": [
+          "bodyslam",
+          "highhorsepower"
+         ],
+         "hp": 49
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "greedent",
+         "moves": [
+          "bodyslam",
+          "earthquake"
+         ],
+         "hp": 110
+        },
+        {
+         "species": "masquerain",
+         "moves": [
+          "bugbuzz",
+          "hydropump"
+         ],
+         "hp": 43
+        },
+        {
+         "species": "latios",
+         "moves": [
+          "aurasphere",
+          "lusterpurge",
+          "psyshock"
+         ],
+         "hp": 21
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 1,
+    "gaveUp": false,
+    "seconds": 117,
+    "fun": 4,
+    "difficulty": 4,
+    "comment": "相手の交代を考慮したワザ選択が求められ、難しい＆面白い",
+    "ratedAt": "2026-10-26T06:11:09.003Z",
+    "surprise": 3
+   }
+  },
+  {
+   "order": 3,
+   "id": 1127,
+   "length": 4,
+   "puzzle": {
+    "id": 1127,
+    "length": 4,
+    "solution": {
+     "type": "move",
+     "index": 0
+    },
+    "detourMoves": 1,
+    "origin": {
+     "method": "extend",
+     "from": 806,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "rayquaza",
+         "moves": [
+          "earthquake",
+          "extremespeed"
+         ],
+         "hp": 112
+        },
+        {
+         "species": "arceusfire",
+         "moves": [
+          "earthpower",
+          "earthquake",
+          "energyball",
+          "extremespeed"
+         ],
+         "hp": 101
+        }
+       ]
+      },
+      {
+       "active": 2,
+       "mons": [
+        {
+         "species": "gardevoir",
+         "moves": [
+          "focusblast",
+          "moonblast",
+          "psychic",
+          "psyshock"
+         ],
+         "hp": 63
+        },
+        {
+         "species": "bronzong",
+         "moves": [
+          "earthquake",
+          "ironhead",
+          "psychic"
+         ],
+         "hp": 141
+        },
+        {
+         "species": "glimmora",
+         "moves": [
+          "earthpower",
+          "energyball",
+          "powergem",
+          "sludgewave"
+         ],
+         "hp": 16
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 24,
+    "fun": 1,
+    "difficulty": 1,
+    "comment": "目の前のポケモンに有効なワザ、かつ同じワザを連打するだけでつまらない",
+    "ratedAt": "2026-10-26T06:13:30.415Z",
+    "surprise": 1
+   }
+  },
+  {
+   "order": 4,
+   "id": 813,
+   "length": 3,
+   "puzzle": {
+    "id": 813,
+    "length": 3,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 0,
+    "origin": {
+     "method": "extend",
+     "from": 446,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "dodrio",
+         "moves": [
+          "drillrun",
+          "quickattack"
+         ],
+         "hp": 120
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "ironmoth",
+         "moves": [
+          "energyball",
+          "fierydance",
+          "fireblast",
+          "sludgewave"
+         ],
+         "hp": 10
+        },
+        {
+         "species": "pincurchin",
+         "moves": [
+          "discharge",
+          "liquidation",
+          "thunderbolt",
+          "zingzap"
+         ],
+         "hp": 32
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 1,
+    "gaveUp": false,
+    "seconds": 37,
+    "fun": 4,
+    "difficulty": 2,
+    "comment": "相手のポケモンが両方地面弱点であるため地面ワザを打ちたくなるが、素早さ関係に注意して先制ワザをうたなければいいけないところが面白い",
+    "ratedAt": "2026-10-26T06:20:03.856Z",
+    "surprise": 3
+   }
+  },
+  {
+   "order": 5,
+   "id": 1295,
+   "length": 5,
+   "puzzle": {
+    "id": 1295,
+    "length": 5,
+    "solution": {
+     "type": "switch",
+     "index": 0
+    },
+    "detourMoves": 0,
+    "origin": {
+     "method": "extend",
+     "from": 1036,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 2,
+       "mons": [
+        {
+         "species": "eternatus",
+         "moves": [
+          "dynamaxcannon",
+          "fireblast",
+          "flamethrower",
+          "sludgebomb"
+         ],
+         "hp": 169
+        },
+        {
+         "species": "screamtail",
+         "moves": [
+          "dazzlinggleam",
+          "playrough"
+         ],
+         "hp": 160
+        },
+        {
+         "species": "azelf",
+         "moves": [
+          "dazzlinggleam",
+          "fireblast",
+          "psychic",
+          "psyshock"
+         ],
+         "hp": 85
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "houndstone",
+         "moves": [
+          "playrough",
+          "shadowsneak"
+         ],
+         "hp": 146
+        },
+        {
+         "species": "porygonz",
+         "moves": [
+          "icebeam",
+          "shadowball",
+          "thunderbolt",
+          "triattack"
+         ],
+         "hp": 86
+        },
+        {
+         "species": "wugtrio",
+         "moves": [
+          "aquajet",
+          "liquidation"
+         ],
+         "hp": 83
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 1,
+    "gaveUp": false,
+    "seconds": 41,
+    "fun": 3,
+    "difficulty": 3,
+    "surprise": 3,
+    "comment": "一度交代を挟む手は思いつきづらく難しい。しかし、2手目以降は同じワザを繰り返し打つ展開なのは気になった",
+    "ratedAt": "2026-10-26T06:31:00.133Z"
+   }
+  },
+  {
+   "order": 6,
+   "id": 481,
+   "length": 2,
+   "puzzle": {
+    "id": 481,
+    "length": 2,
+    "solution": {
+     "type": "move",
+     "index": 2
+    },
+    "detourMoves": 3,
+    "origin": {
+     "method": "extend",
+     "from": 162,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "ironjugulis",
+         "moves": [
+          "darkpulse",
+          "earthpower",
+          "fireblast",
+          "hydropump"
+         ],
+         "hp": 151
+        },
+        {
+         "species": "palkia",
+         "moves": [
+          "fireblast",
+          "hydropump",
+          "spacialrend"
+         ],
+         "hp": 68
+        }
+       ]
+      },
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "frosmoth",
+         "moves": [
+          "bugbuzz",
+          "icebeam"
+         ],
+         "hp": 114
+        },
+        {
+         "species": "zapdos",
+         "moves": [
+          "discharge",
+          "heatwave",
+          "thunderbolt"
+         ],
+         "hp": 48
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 1,
+    "gaveUp": false,
+    "seconds": 45,
+    "fun": 4,
+    "difficulty": 3,
+    "surprise": 3,
+    "comment": "交代を考えた技選択を求められるのが面白い",
+    "ratedAt": "2026-10-26T06:40:10.364Z"
+   }
+  },
+  {
+   "order": 7,
+   "id": 372,
+   "length": 2,
+   "puzzle": {
+    "id": 372,
+    "length": 2,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 0,
+    "origin": {
+     "method": "random",
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "ironbundle",
+         "moves": [
+          "hydropump",
+          "icebeam"
+         ],
+         "hp": 28
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "enamorus",
+         "moves": [
+          "earthpower",
+          "moonblast",
+          "playrough",
+          "zenheadbutt"
+         ],
+         "hp": 107
+        },
+        {
+         "species": "gogoat",
+         "moves": [
+          "earthquake",
+          "rockslide"
+         ],
+         "hp": 94
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 11,
+    "fun": 2,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "相手のポケモン両方に有効なワザを打つだけで簡単すぎる。初心者向けにはいいかも？",
+    "ratedAt": "2026-10-26T06:41:04.323Z"
+   }
+  },
+  {
+   "order": 8,
+   "id": 1123,
+   "length": 4,
+   "puzzle": {
+    "id": 1123,
+    "length": 4,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 0,
+    "origin": {
+     "method": "extend",
+     "from": 800,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 2,
+       "mons": [
+        {
+         "species": "dusknoir",
+         "moves": [
+          "earthquake",
+          "shadowsneak"
+         ],
+         "hp": 96
+        },
+        {
+         "species": "ampharos",
+         "moves": [
+          "dazzlinggleam",
+          "discharge",
+          "focusblast",
+          "thunderbolt"
+         ],
+         "hp": 87
+        },
+        {
+         "species": "weezinggalar",
+         "moves": [
+          "fireblast",
+          "gunkshot",
+          "strangesteam"
+         ],
+         "hp": 115
+        }
+       ]
+      },
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "dedenne",
+         "moves": [
+          "dazzlinggleam",
+          "thunderbolt"
+         ],
+         "hp": 95
+        },
+        {
+         "species": "abomasnow",
+         "moves": [
+          "earthquake",
+          "iceshard"
+         ],
+         "hp": 165
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 2,
+    "gaveUp": false,
+    "seconds": 118,
+    "fun": 5,
+    "difficulty": 4,
+    "surprise": 4,
+    "comment": "自分の控えのポケモンのワザも考慮して、相手のポケモンの誰のHPを削るかを考える必要があり、難しくて面白い。途中、相手のHPが低いから「かげうち」を打ちたくなるが、交代を考えてじしんを",
+    "ratedAt": "2026-10-26T06:46:18.933Z"
+   }
+  },
+  {
+   "order": 9,
+   "id": 329,
+   "length": 1,
+   "puzzle": {
+    "id": 329,
+    "length": 1,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 2,
+    "origin": {
+     "method": "random",
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "regidrago",
+         "moves": [
+          "dragonclaw",
+          "earthquake"
+         ],
+         "hp": 82
+        },
+        {
+         "species": "tornadus",
+         "moves": [
+          "focusblast",
+          "heatwave"
+         ],
+         "hp": 82
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "magnezone",
+         "moves": [
+          "discharge",
+          "flashcannon",
+          "thunderbolt"
+         ],
+         "hp": 63
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 13,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "目の前のポケモンに有効な手を一回打つだけで、つまらない",
+    "ratedAt": "2026-10-26T06:47:36.468Z"
+   }
+  },
+  {
+   "order": 10,
+   "id": 1325,
+   "length": 5,
+   "puzzle": {
+    "id": 1325,
+    "length": 5,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 0,
+    "origin": {
+     "method": "extend",
+     "from": 1084,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "chandelure",
+         "moves": [
+          "energyball",
+          "fireblast",
+          "shadowball"
+         ],
+         "hp": 115
+        },
+        {
+         "species": "wugtrio",
+         "moves": [
+          "aquajet",
+          "liquidation"
+         ],
+         "hp": 109
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "decidueye",
+         "moves": [
+          "leafblade",
+          "shadowsneak"
+         ],
+         "hp": 148
+        },
+        {
+         "species": "armarouge",
+         "moves": [
+          "aurasphere",
+          "energyball",
+          "focusblast",
+          "psyshock"
+         ],
+         "hp": 87
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 2,
+    "gaveUp": false,
+    "seconds": 70,
+    "fun": 3,
+    "difficulty": 3,
+    "surprise": 3,
+    "comment": "シャンデラの攻撃が有効なので、シャンデラに交代したくなるが、それだと余計な被弾によって負けてしまう可能性が生じる。「死に出し」の強力さが学べる良問",
+    "ratedAt": "2026-10-26T06:57:03.746Z"
+   }
+  },
+  {
+   "order": 11,
+   "id": 1340,
+   "length": 5,
+   "puzzle": {
+    "id": 1340,
+    "length": 5,
+    "solution": {
+     "type": "switch",
+     "index": 0
+    },
+    "detourMoves": 0,
+    "origin": {
+     "method": "extend",
+     "from": 1108,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "arboliva",
+         "moves": [
+          "earthpower",
+          "energyball",
+          "hypervoice"
+         ],
+         "hp": 143
+        },
+        {
+         "species": "cresselia",
+         "moves": [
+          "moonblast",
+          "psyshock",
+          "thunderbolt"
+         ],
+         "hp": 177
+        }
+       ]
+      },
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "probopass",
+         "moves": [
+          "flashcannon",
+          "powergem"
+         ],
+         "hp": 68
+        },
+        {
+         "species": "flygon",
+         "moves": [
+          "earthquake",
+          "stoneedge"
+         ],
+         "hp": 70
+        },
+        {
+         "species": "mudsdale",
+         "moves": [
+          "earthquake",
+          "stoneedge"
+         ],
+         "hp": 83
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 2,
+    "gaveUp": false,
+    "seconds": 97,
+    "fun": 4,
+    "difficulty": 4,
+    "surprise": 4,
+    "comment": "自分の交代が必要であり、また、相手のポケモンを1体倒した後、打つわざを変更する必要があり面白い",
+    "ratedAt": "2026-10-26T07:14:24.658Z"
+   }
+  },
+  {
+   "order": 12,
+   "id": 547,
+   "length": 2,
+   "puzzle": {
+    "id": 547,
+    "length": 2,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 1,
+    "origin": {
+     "method": "extend",
+     "from": 291,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "heatran",
+         "moves": [
+          "earthpower",
+          "lavaplume"
+         ],
+         "hp": 166
+        },
+        {
+         "species": "swampert",
+         "moves": [
+          "earthquake",
+          "icebeam"
+         ],
+         "hp": 29
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "decidueyehisui",
+         "moves": [
+          "leafblade",
+          "triplearrows"
+         ],
+         "hp": 143
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 8,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "簡単すぎる",
+    "ratedAt": "2026-10-26T07:14:42.770Z"
+   }
+  },
+  {
+   "order": 13,
+   "id": 164,
+   "length": 1,
+   "puzzle": {
+    "id": 164,
+    "length": 1,
+    "solution": {
+     "type": "move",
+     "index": 2
+    },
+    "detourMoves": 0,
+    "origin": {
+     "method": "random",
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "landorus",
+         "moves": [
+          "focusblast",
+          "psychic",
+          "rockslide",
+          "sludgewave"
+         ],
+         "hp": 98
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "chandelure",
+         "moves": [
+          "energyball",
+          "fireblast",
+          "shadowball"
+         ],
+         "hp": 55
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 8,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "有効なワザを一回打つだけで、つまらない",
+    "ratedAt": "2026-10-26T07:15:18.162Z"
+   }
+  },
+  {
+   "order": 14,
+   "id": 1077,
+   "length": 4,
+   "puzzle": {
+    "id": 1077,
+    "length": 4,
+    "solution": {
+     "type": "move",
+     "index": 0
+    },
+    "detourMoves": 2,
+    "origin": {
+     "method": "extend",
+     "from": 745,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "snorlax",
+         "moves": [
+          "bodyslam",
+          "crunch",
+          "earthquake"
+         ],
+         "hp": 153
+        },
+        {
+         "species": "decidueyehisui",
+         "moves": [
+          "leafblade",
+          "triplearrows"
+         ],
+         "hp": 56
+        }
+       ]
+      },
+      {
+       "active": 2,
+       "mons": [
+        {
+         "species": "dodrio",
+         "moves": [
+          "drillrun",
+          "quickattack"
+         ],
+         "hp": 21
+        },
+        {
+         "species": "araquanid",
+         "moves": [
+          "hydropump",
+          "liquidation"
+         ],
+         "hp": 47
+        },
+        {
+         "species": "pikachu",
+         "moves": [
+          "playrough",
+          "surf"
+         ],
+         "hp": 40
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 1,
+    "gaveUp": false,
+    "seconds": 57,
+    "fun": 3,
+    "difficulty": 3,
+    "surprise": 3,
+    "comment": "相手の体力をしっかり見なければ正解にたどり着けない点は面白い。後半ワザ連打なのは微妙",
+    "ratedAt": "2026-10-26T07:20:57.084Z"
+   }
+  },
+  {
+   "order": 15,
+   "id": 1374,
+   "length": 5,
+   "puzzle": {
+    "id": 1374,
+    "length": 5,
+    "solution": {
+     "type": "move",
+     "index": 0
+    },
+    "detourMoves": 0,
+    "origin": {
+     "method": "extend",
+     "from": 1174,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "virizion",
+         "moves": [
+          "leafblade",
+          "stoneedge"
+         ],
+         "hp": 137
+        },
+        {
+         "species": "necrozma",
+         "moves": [
+          "earthpower",
+          "earthquake",
+          "heatwave"
+         ],
+         "hp": 49
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "sandyshocks",
+         "moves": [
+          "earthpower",
+          "thunderbolt"
+         ],
+         "hp": 142
+        },
+        {
+         "species": "hitmonchan",
+         "moves": [
+          "icepunch",
+          "machpunch",
+          "poisonjab"
+         ],
+         "hp": 98
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 22,
+    "fun": 2,
+    "difficulty": 1,
+    "surprise": 2,
+    "comment": "ターン数は長いが、同じ技を連打するだけでつまらない。最後の選択肢もどれでもよく、解けても達成感がない",
+    "ratedAt": "2026-10-26T07:28:35.590Z"
+   }
+  },
+  {
+   "order": 16,
+   "id": 1261,
+   "length": 5,
+   "puzzle": {
+    "id": 1261,
+    "length": 5,
+    "solution": {
+     "type": "move",
+     "index": 3
+    },
+    "detourMoves": 5,
+    "origin": {
+     "method": "extend",
+     "from": 990,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 2,
+       "mons": [
+        {
+         "species": "hitmontop",
+         "moves": [
+          "earthquake",
+          "stoneedge"
+         ],
+         "hp": 54
+        },
+        {
+         "species": "calyrex",
+         "moves": [
+          "psychic",
+          "psyshock"
+         ],
+         "hp": 164
+        },
+        {
+         "species": "medicham",
+         "moves": [
+          "bulletpunch",
+          "icepunch",
+          "poisonjab",
+          "zenheadbutt"
+         ],
+         "hp": 128
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "rhydon",
+         "moves": [
+          "earthquake",
+          "megahorn",
+          "stoneedge"
+         ],
+         "hp": 98
+        },
+        {
+         "species": "lumineon",
+         "moves": [
+          "hydropump",
+          "icebeam"
+         ],
+         "hp": 44
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": false,
+    "failures": 5,
+    "gaveUp": true,
+    "seconds": 105,
+    "fun": 4,
+    "difficulty": 5,
+    "surprise": 5,
+    "comment": "すぐに交代することはできないが、その後相手が交代してきたらこちらも交代しなければならないというギミックは他になく、面白かった。かなり難しい",
+    "ratedAt": "2026-10-26T07:36:51.285Z"
+   }
+  },
+  {
+   "order": 17,
+   "id": 900,
+   "length": 3,
+   "puzzle": {
+    "id": 900,
+    "length": 3,
+    "solution": {
+     "type": "move",
+     "index": 2
+    },
+    "detourMoves": 0,
+    "origin": {
+     "method": "extend",
+     "from": 538,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 2,
+       "mons": [
+        {
+         "species": "greninja",
+         "moves": [
+          "darkpulse",
+          "gunkshot",
+          "hydropump",
+          "icebeam"
+         ],
+         "hp": 142
+        },
+        {
+         "species": "swalot",
+         "moves": [
+          "earthquake",
+          "gunkshot",
+          "icebeam",
+          "sludgebomb"
+         ],
+         "hp": 58
+        },
+        {
+         "species": "raikou",
+         "moves": [
+          "scald",
+          "shadowball",
+          "thunderbolt"
+         ],
+         "hp": 95
+        }
+       ]
+      },
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "gengar",
+         "moves": [
+          "focusblast",
+          "shadowball",
+          "sludgewave"
+         ],
+         "hp": 116
+        },
+        {
+         "species": "greninja",
+         "moves": [
+          "darkpulse",
+          "gunkshot",
+          "hydropump",
+          "icebeam"
+         ],
+         "hp": 24
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 21,
+    "fun": 2,
+    "difficulty": 1,
+    "surprise": 2,
+    "comment": "有効な手を打ち続けるだけでつまらない",
+    "ratedAt": "2026-10-26T07:38:58.866Z"
+   }
+  },
+  {
+   "order": 18,
+   "id": 1056,
+   "length": 4,
+   "puzzle": {
+    "id": 1056,
+    "length": 4,
+    "solution": {
+     "type": "move",
+     "index": 2
+    },
+    "detourMoves": 0,
+    "origin": {
+     "method": "extend",
+     "from": 719,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "dugtrioalola",
+         "moves": [
+          "earthquake",
+          "ironhead",
+          "stoneedge"
+         ],
+         "hp": 103
+        },
+        {
+         "species": "terrakion",
+         "moves": [
+          "earthquake",
+          "quickattack",
+          "stoneedge"
+         ],
+         "hp": 115
+        }
+       ]
+      },
+      {
+       "active": 2,
+       "mons": [
+        {
+         "species": "gothitelle",
+         "moves": [
+          "darkpulse",
+          "focusblast",
+          "psychic",
+          "thunderbolt"
+         ],
+         "hp": 82
+        },
+        {
+         "species": "gardevoir",
+         "moves": [
+          "focusblast",
+          "moonblast",
+          "psychic",
+          "psyshock"
+         ],
+         "hp": 91
+        },
+        {
+         "species": "shaymin",
+         "moves": [
+          "airslash",
+          "earthpower",
+          "seedflare"
+         ],
+         "hp": 29
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 22,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "有効かつ同じワザを打つだけでつまらない",
+    "ratedAt": "2026-10-26T08:54:13.264Z"
+   }
+  },
+  {
+   "order": 19,
+   "id": 752,
+   "length": 3,
+   "puzzle": {
+    "id": 752,
+    "length": 3,
+    "solution": {
+     "type": "move",
+     "index": 2
+    },
+    "detourMoves": 2,
+    "origin": {
+     "method": "extend",
+     "from": 346,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "decidueyehisui",
+         "moves": [
+          "leafblade",
+          "triplearrows"
+         ],
+         "hp": 86
+        },
+        {
+         "species": "basculegionf",
+         "moves": [
+          "hydropump",
+          "icebeam",
+          "shadowball"
+         ],
+         "hp": 67
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "exeggutoralola",
+         "moves": [
+          "dragonpulse",
+          "flamethrower"
+         ],
+         "hp": 65
+        },
+        {
+         "species": "magearna",
+         "moves": [
+          "aurasphere",
+          "flashcannon",
+          "ironhead"
+         ],
+         "hp": 51
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 1,
+    "gaveUp": false,
+    "seconds": 63,
+    "fun": 3,
+    "difficulty": 2,
+    "surprise": 3,
+    "comment": "目の前のポケモンに弱点を突こうとすると間違えてしまう点は難しい。他は単純",
+    "ratedAt": "2026-10-26T08:59:21.737Z"
+   }
+  },
+  {
+   "order": 20,
+   "id": 289,
+   "length": 1,
+   "puzzle": {
+    "id": 289,
+    "length": 1,
+    "solution": {
+     "type": "move",
+     "index": 0
+    },
+    "detourMoves": 4,
+    "origin": {
+     "method": "random",
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "bruxish",
+         "moves": [
+          "aquajet",
+          "crunch",
+          "icefang"
+         ],
+         "hp": 49
+        },
+        {
+         "species": "probopass",
+         "moves": [
+          "flashcannon",
+          "powergem"
+         ],
+         "hp": 31
+        },
+        {
+         "species": "swalot",
+         "moves": [
+          "earthquake",
+          "gunkshot",
+          "icebeam",
+          "sludgebomb"
+         ],
+         "hp": 86
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "mukalola",
+         "moves": [
+          "gunkshot",
+          "icepunch",
+          "poisonjab",
+          "shadowsneak"
+         ],
+         "hp": 16
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 31,
+    "fun": 2,
+    "difficulty": 2,
+    "surprise": 2,
+    "comment": "先制ワザを選ぶ必要があるが、他に引っ掛けとなる選択肢がなく簡単",
+    "ratedAt": "2026-10-26T09:00:39.769Z"
+   }
+  },
+  {
+   "order": 21,
+   "id": 304,
+   "length": 1,
+   "puzzle": {
+    "id": 304,
+    "length": 1,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 0,
+    "origin": {
+     "method": "random",
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "enamorus",
+         "moves": [
+          "earthpower",
+          "moonblast",
+          "playrough",
+          "zenheadbutt"
+         ],
+         "hp": 132
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "kyurem",
+         "moves": [
+          "earthpower",
+          "icebeam"
+         ],
+         "hp": 139
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 10,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "目の前のポケモンに有効な手を打つだけで簡単",
+    "ratedAt": "2026-10-26T09:01:51.479Z"
+   }
+  },
+  {
+   "order": 22,
+   "id": 264,
+   "length": 1,
+   "puzzle": {
+    "id": 264,
+    "length": 1,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 1,
+    "origin": {
+     "method": "random",
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "dialgaorigin",
+         "moves": [
+          "fireblast",
+          "flashcannon"
+         ],
+         "hp": 45
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "weezing",
+         "moves": [
+          "fireblast",
+          "gunkshot",
+          "sludgebomb"
+         ],
+         "hp": 84
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 14,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "目の前のポケモンに有効な手を打つだけでつまらない",
+    "ratedAt": "2026-10-26T09:02:25.894Z"
+   }
+  },
+  {
+   "order": 23,
+   "id": 647,
+   "length": 3,
+   "puzzle": {
+    "id": 647,
+    "length": 3,
+    "solution": {
+     "type": "move",
+     "index": 2
+    },
+    "detourMoves": 3,
+    "origin": {
+     "method": "extend",
+     "from": 93,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "basculegionf",
+         "moves": [
+          "hydropump",
+          "icebeam",
+          "shadowball"
+         ],
+         "hp": 36
+        },
+        {
+         "species": "mimikyu",
+         "moves": [
+          "playrough",
+          "shadowclaw",
+          "shadowsneak"
+         ],
+         "hp": 92
+        }
+       ]
+      },
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "reuniclus",
+         "moves": [
+          "focusblast",
+          "psychic",
+          "psyshock"
+         ],
+         "hp": 178
+        },
+        {
+         "species": "eelektross",
+         "moves": [
+          "discharge",
+          "firepunch",
+          "flamethrower"
+         ],
+         "hp": 22
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 13,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "目の前のポケモンに有効な手を打つ問題、かつ同じワザの連打で面白くない",
+    "ratedAt": "2026-10-26T09:03:02.414Z"
+   }
+  },
+  {
+   "order": 24,
+   "id": 1039,
+   "length": 4,
+   "puzzle": {
+    "id": 1039,
+    "length": 4,
+    "solution": {
+     "type": "switch",
+     "index": 0
+    },
+    "detourMoves": 1,
+    "origin": {
+     "method": "extend",
+     "from": 699,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "manaphy",
+         "moves": [
+          "energyball",
+          "hydropump",
+          "icebeam",
+          "surf"
+         ],
+         "hp": 139
+        },
+        {
+         "species": "deoxys",
+         "moves": [
+          "extremespeed",
+          "icebeam"
+         ],
+         "hp": 105
+        },
+        {
+         "species": "bronzong",
+         "moves": [
+          "earthquake",
+          "ironhead",
+          "psychic"
+         ],
+         "hp": 88
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "cetitan",
+         "moves": [
+          "earthquake",
+          "iceshard",
+          "iciclecrash",
+          "liquidation"
+         ],
+         "hp": 199
+        },
+        {
+         "species": "rotom",
+         "moves": [
+          "shadowball",
+          "thunderbolt"
+         ],
+         "hp": 34
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 2,
+    "gaveUp": false,
+    "seconds": 90,
+    "fun": 3,
+    "difficulty": 3,
+    "surprise": 2,
+    "comment": "交代先を考えなければいけないのが難しい。しかしハイドロポンプ連打が答えというのは納得感に欠ける",
+    "ratedAt": "2026-10-26T09:05:20.388Z"
+   }
+  },
+  {
+   "order": 25,
+   "id": 1153,
+   "length": 4,
+   "puzzle": {
+    "id": 1153,
+    "length": 4,
+    "solution": {
+     "type": "move",
+     "index": 2
+    },
+    "detourMoves": 0,
+    "origin": {
+     "method": "extend",
+     "from": 845,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "skuntank",
+         "moves": [
+          "fireblast",
+          "gunkshot"
+         ],
+         "hp": 79
+        },
+        {
+         "species": "klawf",
+         "moves": [
+          "crabhammer",
+          "highhorsepower",
+          "stoneedge"
+         ],
+         "hp": 80
+        }
+       ]
+      },
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "feraligatr",
+         "moves": [
+          "crunch",
+          "icepunch",
+          "liquidation"
+         ],
+         "hp": 48
+        },
+        {
+         "species": "sandaconda",
+         "moves": [
+          "earthquake",
+          "stoneedge"
+         ],
+         "hp": 50
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 2,
+    "gaveUp": false,
+    "seconds": 94,
+    "fun": 4,
+    "difficulty": 4,
+    "surprise": 4,
+    "comment": "削るべき相手を把握する必要があり、面白い。余計な要素も少なく美しい",
+    "ratedAt": "2026-10-26T09:08:35.857Z"
+   }
+  },
+  {
+   "order": 26,
+   "id": 542,
+   "length": 2,
+   "puzzle": {
+    "id": 542,
+    "length": 2,
+    "solution": {
+     "type": "move",
+     "index": 0
+    },
+    "detourMoves": 3,
+    "origin": {
+     "method": "extend",
+     "from": 282,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "ninetales",
+         "moves": [
+          "fireblast",
+          "scorchingsands"
+         ],
+         "hp": 83
+        },
+        {
+         "species": "dugtrioalola",
+         "moves": [
+          "earthquake",
+          "ironhead",
+          "stoneedge"
+         ],
+         "hp": 104
+        },
+        {
+         "species": "volcarona",
+         "moves": [
+          "bugbuzz",
+          "fierydance",
+          "fireblast"
+         ],
+         "hp": 160
+        }
+       ]
+      },
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "kingambit",
+         "moves": [
+          "ironhead",
+          "kowtowcleave"
+         ],
+         "hp": 66
+        },
+        {
+         "species": "excadrill",
+         "moves": [
+          "earthquake",
+          "ironhead",
+          "rockslide"
+         ],
+         "hp": 22
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 23,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "有効な手を連打するパターン。つまらない",
+    "ratedAt": "2026-10-26T09:09:16.617Z"
+   }
+  },
+  {
+   "order": 27,
+   "id": 1152,
+   "length": 4,
+   "puzzle": {
+    "id": 1152,
+    "length": 4,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 2,
+    "origin": {
+     "method": "extend",
+     "from": 844,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "solgaleo",
+         "moves": [
+          "earthquake",
+          "psychic",
+          "sunsteelstrike"
+         ],
+         "hp": 170
+        },
+        {
+         "species": "brutebonnet",
+         "moves": [
+          "crunch",
+          "seedbomb"
+         ],
+         "hp": 12
+        }
+       ]
+      },
+      {
+       "active": 2,
+       "mons": [
+        {
+         "species": "mienshao",
+         "moves": [
+          "poisonjab",
+          "stoneedge"
+         ],
+         "hp": 113
+        },
+        {
+         "species": "mimikyu",
+         "moves": [
+          "playrough",
+          "shadowclaw",
+          "shadowsneak"
+         ],
+         "hp": 53
+        },
+        {
+         "species": "samurott",
+         "moves": [
+          "aquajet",
+          "icebeam",
+          "megahorn",
+          "sacredsword"
+         ],
+         "hp": 114
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 47,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "有効な手を連打する問題でつまらない",
+    "ratedAt": "2026-10-26T09:10:14.551Z"
+   }
+  },
+  {
+   "order": 28,
+   "id": 938,
+   "length": 3,
+   "puzzle": {
+    "id": 938,
+    "length": 3,
+    "solution": {
+     "type": "move",
+     "index": 2
+    },
+    "detourMoves": 1,
+    "origin": {
+     "method": "extend",
+     "from": 581,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "raikou",
+         "moves": [
+          "scald",
+          "shadowball",
+          "thunderbolt"
+         ],
+         "hp": 144
+        },
+        {
+         "species": "masquerain",
+         "moves": [
+          "bugbuzz",
+          "hydropump"
+         ],
+         "hp": 117
+        },
+        {
+         "species": "arceusbug",
+         "moves": [
+          "earthpower",
+          "fireblast"
+         ],
+         "hp": 171
+        }
+       ]
+      },
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "lumineon",
+         "moves": [
+          "hydropump",
+          "icebeam"
+         ],
+         "hp": 116
+        },
+        {
+         "species": "greedent",
+         "moves": [
+          "bodyslam",
+          "earthquake"
+         ],
+         "hp": 79
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 14,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "有効な手を連打する問題でつまらない",
+    "ratedAt": "2026-10-26T09:10:41.663Z"
+   }
+  },
+  {
+   "order": 29,
+   "id": 1205,
+   "length": 4,
+   "puzzle": {
+    "id": 1205,
+    "length": 4,
+    "solution": {
+     "type": "move",
+     "index": 0
+    },
+    "detourMoves": 2,
+    "origin": {
+     "method": "extend",
+     "from": 912,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "irontreads",
+         "moves": [
+          "earthquake",
+          "ironhead"
+         ],
+         "hp": 132
+        },
+        {
+         "species": "jolteon",
+         "moves": [
+          "shadowball",
+          "thunderbolt"
+         ],
+         "hp": 112
+        }
+       ]
+      },
+      {
+       "active": 2,
+       "mons": [
+        {
+         "species": "basculegionf",
+         "moves": [
+          "hydropump",
+          "icebeam",
+          "shadowball"
+         ],
+         "hp": 147
+        },
+        {
+         "species": "necrozmaduskmane",
+         "moves": [
+          "earthquake",
+          "sunsteelstrike"
+         ],
+         "hp": 17
+        },
+        {
+         "species": "rotomheat",
+         "moves": [
+          "discharge",
+          "thunderbolt"
+         ],
+         "hp": 29
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 1,
+    "gaveUp": false,
+    "seconds": 26,
+    "fun": 2,
+    "difficulty": 1,
+    "surprise": 2,
+    "comment": "ポケモンを一体捨てる必要はあるが、根本的には有効な手を連打する問題で面白みに欠ける",
+    "ratedAt": "2026-10-26T09:12:26.253Z"
+   }
+  },
+  {
+   "order": 30,
+   "id": 776,
+   "length": 3,
+   "puzzle": {
+    "id": 776,
+    "length": 3,
+    "solution": {
+     "type": "move",
+     "index": 0
+    },
+    "detourMoves": 1,
+    "origin": {
+     "method": "extend",
+     "from": 403,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "exeggutor",
+         "moves": [
+          "psychic",
+          "psyshock",
+          "sludgebomb"
+         ],
+         "hp": 74
+        },
+        {
+         "species": "gengar",
+         "moves": [
+          "focusblast",
+          "shadowball",
+          "sludgewave"
+         ],
+         "hp": 79
+        }
+       ]
+      },
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "calyrexice",
+         "moves": [
+          "glaciallance",
+          "highhorsepower"
+         ],
+         "hp": 27
+        },
+        {
+         "species": "greattusk",
+         "moves": [
+          "earthquake",
+          "stoneedge"
+         ],
+         "hp": 184
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 16,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "同じ技を連打する問題でつまらない",
+    "ratedAt": "2026-10-26T09:13:03.405Z"
+   }
+  },
+  {
+   "order": 31,
+   "id": 1017,
+   "length": 4,
+   "puzzle": {
+    "id": 1017,
+    "length": 4,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 0,
+    "origin": {
+     "method": "extend",
+     "from": 673,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "drifblim",
+         "moves": [
+          "airslash",
+          "shadowball"
+         ],
+         "hp": 129
+        },
+        {
+         "species": "glastrier",
+         "moves": [
+          "highhorsepower",
+          "iciclecrash"
+         ],
+         "hp": 113
+        },
+        {
+         "species": "greninjabond",
+         "moves": [
+          "darkpulse",
+          "gunkshot",
+          "hydropump",
+          "icebeam"
+         ],
+         "hp": 24
+        }
+       ]
+      },
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "hydreigon",
+         "moves": [
+          "darkpulse",
+          "fireblast",
+          "flashcannon"
+         ],
+         "hp": 64
+        },
+        {
+         "species": "fezandipiti",
+         "moves": [
+          "gunkshot",
+          "moonblast",
+          "playrough"
+         ],
+         "hp": 106
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 2,
+    "gaveUp": false,
+    "seconds": 66,
+    "fun": 3,
+    "difficulty": 2,
+    "surprise": 2,
+    "comment": "交代を考慮することが求められているが、情報処理能力を要求されているだけで根本的には単純",
+    "ratedAt": "2026-10-26T09:15:04.412Z"
+   }
+  },
+  {
+   "order": 32,
+   "id": 228,
+   "length": 1,
+   "puzzle": {
+    "id": 228,
+    "length": 1,
+    "solution": {
+     "type": "move",
+     "index": 0
+    },
+    "detourMoves": 3,
+    "origin": {
+     "method": "random",
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "qwilfish",
+         "moves": [
+          "gunkshot",
+          "waterfall"
+         ],
+         "hp": 127
+        },
+        {
+         "species": "arboliva",
+         "moves": [
+          "earthpower",
+          "energyball",
+          "hypervoice"
+         ],
+         "hp": 44
+        },
+        {
+         "species": "rampardos",
+         "moves": [
+          "earthquake",
+          "firepunch",
+          "rockslide",
+          "zenheadbutt"
+         ],
+         "hp": 22
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "deoxys",
+         "moves": [
+          "extremespeed",
+          "icebeam"
+         ],
+         "hp": 84
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 14,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "当然有効な手を一回選択するだけでつまらない",
+    "ratedAt": "2026-10-26T09:16:55.441Z"
+   }
+  },
+  {
+   "order": 33,
+   "id": 1072,
+   "length": 4,
+   "puzzle": {
+    "id": 1072,
+    "length": 4,
+    "solution": {
+     "type": "move",
+     "index": 0
+    },
+    "detourMoves": 1,
+    "origin": {
+     "method": "extend",
+     "from": 740,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "infernape",
+         "moves": [
+          "gunkshot",
+          "machpunch",
+          "stoneedge"
+         ],
+         "hp": 82
+        },
+        {
+         "species": "dugtrio",
+         "moves": [
+          "earthquake",
+          "stoneedge"
+         ],
+         "hp": 103
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "ludicolo",
+         "moves": [
+          "hydropump",
+          "icebeam"
+         ],
+         "hp": 150
+        },
+        {
+         "species": "eelektross",
+         "moves": [
+          "discharge",
+          "firepunch",
+          "flamethrower"
+         ],
+         "hp": 55
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 32,
+    "fun": 3,
+    "difficulty": 3,
+    "surprise": 3,
+    "comment": "構造は単純だが、相手の誰を削るべきかを判断しなければならない問題で、悪くない",
+    "ratedAt": "2026-10-26T09:18:12.552Z"
+   }
+  },
+  {
+   "order": 34,
+   "id": 1353,
+   "length": 5,
+   "puzzle": {
+    "id": 1353,
+    "length": 5,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 1,
+    "origin": {
+     "method": "extend",
+     "from": 1137,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 2,
+       "mons": [
+        {
+         "species": "banette",
+         "moves": [
+          "gunkshot",
+          "shadowsneak"
+         ],
+         "hp": 32
+        },
+        {
+         "species": "ragingbolt",
+         "moves": [
+          "discharge",
+          "dragonpulse",
+          "thunderbolt"
+         ],
+         "hp": 45
+        },
+        {
+         "species": "basculegion",
+         "moves": [
+          "aquajet",
+          "shadowball"
+         ],
+         "hp": 173
+        }
+       ]
+      },
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "granbull",
+         "moves": [
+          "earthquake",
+          "playrough"
+         ],
+         "hp": 145
+        },
+        {
+         "species": "granbull",
+         "moves": [
+          "earthquake",
+          "playrough"
+         ],
+         "hp": 157
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 4,
+    "gaveUp": false,
+    "seconds": 175,
+    "fun": 5,
+    "difficulty": 4,
+    "surprise": 5,
+    "comment": "目の前のポケモンに有効な手を打って削る⇒あえて控えのポケモンを捨てる⇒死に出しでジュペッタを出す という複雑な手順が求められ、面白い",
+    "ratedAt": "2026-10-26T09:24:00.627Z"
+   }
+  },
+  {
+   "order": 35,
+   "id": 44,
+   "length": 1,
+   "puzzle": {
+    "id": 44,
+    "length": 1,
+    "solution": {
+     "type": "move",
+     "index": 0
+    },
+    "detourMoves": 0,
+    "origin": {
+     "method": "random",
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "mudsdale",
+         "moves": [
+          "earthquake",
+          "stoneedge"
+         ],
+         "hp": 103
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "luxray",
+         "moves": [
+          "icefang",
+          "playrough"
+         ],
+         "hp": 131
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 9,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "有効な手を打つだけでつまらない",
+    "ratedAt": "2026-10-26T09:24:19.875Z"
+   }
+  },
+  {
+   "order": 36,
+   "id": 728,
+   "length": 3,
+   "puzzle": {
+    "id": 728,
+    "length": 3,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 1,
+    "origin": {
+     "method": "extend",
+     "from": 290,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "necrozmaduskmane",
+         "moves": [
+          "earthquake",
+          "sunsteelstrike"
+         ],
+         "hp": 135
+        }
+       ]
+      },
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "lycanrocdusk",
+         "moves": [
+          "accelerock",
+          "stoneedge"
+         ],
+         "hp": 99
+        },
+        {
+         "species": "latios",
+         "moves": [
+          "aurasphere",
+          "lusterpurge",
+          "psyshock"
+         ],
+         "hp": 86
+        },
+        {
+         "species": "mightyena",
+         "moves": [
+          "crunch",
+          "playrough",
+          "poisonfang"
+         ],
+         "hp": 67
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 12,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "いたづらにターンを伸ばしているだけで有効な手を連打する以上面白くない",
+    "ratedAt": "2026-10-26T09:25:54.602Z"
+   }
+  },
+  {
+   "order": 37,
+   "id": 305,
+   "length": 1,
+   "puzzle": {
+    "id": 305,
+    "length": 1,
+    "solution": {
+     "type": "move",
+     "index": 3
+    },
+    "detourMoves": 4,
+    "origin": {
+     "method": "random",
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "lunala",
+         "moves": [
+          "focusblast",
+          "moonblast",
+          "moongeistbeam",
+          "psyshock"
+         ],
+         "hp": 142
+        },
+        {
+         "species": "hydreigon",
+         "moves": [
+          "darkpulse",
+          "fireblast",
+          "flashcannon"
+         ],
+         "hp": 46
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "okidogi",
+         "moves": [
+          "gunkshot",
+          "highhorsepower"
+         ],
+         "hp": 151
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 12,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "有効な手を打つだけで面白くない",
+    "ratedAt": "2026-10-26T09:26:49.817Z"
+   }
+  },
+  {
+   "order": 38,
+   "id": 66,
+   "length": 2,
+   "puzzle": {
+    "id": 66,
+    "length": 2,
+    "solution": {
+     "type": "move",
+     "index": 0
+    },
+    "detourMoves": 1,
+    "origin": {
+     "method": "random",
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "taurospaldeacombat",
+         "moves": [
+          "earthquake",
+          "ironhead",
+          "stoneedge"
+         ],
+         "hp": 67
+        },
+        {
+         "species": "glimmora",
+         "moves": [
+          "earthpower",
+          "energyball",
+          "powergem",
+          "sludgewave"
+         ],
+         "hp": 69
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "rotomheat",
+         "moves": [
+          "discharge",
+          "thunderbolt"
+         ],
+         "hp": 46
+        },
+        {
+         "species": "qwilfishhisui",
+         "moves": [
+          "crunch",
+          "gunkshot"
+         ],
+         "hp": 48
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 10,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "有効な手を連打するだけで面白くない",
+    "ratedAt": "2026-10-26T09:27:14.808Z"
+   }
+  },
+  {
+   "order": 39,
+   "id": 604,
+   "length": 2,
+   "puzzle": {
+    "id": 604,
+    "length": 2,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 2,
+    "origin": {
+     "method": "extend",
+     "from": 390,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "spectrier",
+         "moves": [
+          "darkpulse",
+          "shadowball"
+         ],
+         "hp": 160
+        },
+        {
+         "species": "calyrexshadow",
+         "moves": [
+          "astralbarrage",
+          "psyshock"
+         ],
+         "hp": 55
+        },
+        {
+         "species": "chimecho",
+         "moves": [
+          "dazzlinggleam",
+          "psyshock"
+         ],
+         "hp": 86
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "raichu",
+         "moves": [
+          "focusblast",
+          "surf",
+          "thunderbolt"
+         ],
+         "hp": 132
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 10,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "有効な手を連打するだけで面白くない",
+    "ratedAt": "2026-10-26T09:27:31.984Z"
+   }
+  },
+  {
+   "order": 40,
+   "id": 1309,
+   "length": 5,
+   "puzzle": {
+    "id": 1309,
+    "length": 5,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 1,
+    "origin": {
+     "method": "extend",
+     "from": 1063,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "jolteon",
+         "moves": [
+          "shadowball",
+          "thunderbolt"
+         ],
+         "hp": 93
+        },
+        {
+         "species": "flygon",
+         "moves": [
+          "earthquake",
+          "stoneedge"
+         ],
+         "hp": 115
+        }
+       ]
+      },
+      {
+       "active": 2,
+       "mons": [
+        {
+         "species": "pelipper",
+         "moves": [
+          "hydropump",
+          "surf"
+         ],
+         "hp": 51
+        },
+        {
+         "species": "tornadus",
+         "moves": [
+          "focusblast",
+          "heatwave"
+         ],
+         "hp": 12
+        },
+        {
+         "species": "grumpig",
+         "moves": [
+          "earthpower",
+          "focusblast",
+          "psyshock",
+          "shadowball"
+         ],
+         "hp": 152
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 1,
+    "gaveUp": false,
+    "seconds": 144,
+    "fun": 4,
+    "difficulty": 3,
+    "surprise": 4,
+    "comment": "目の前のポケモンに有効な手より交代をケアする選択が求められ、面白い",
+    "ratedAt": "2026-10-26T09:30:39.293Z"
+   }
+  },
+  {
+   "order": 41,
+   "id": 181,
+   "length": 1,
+   "puzzle": {
+    "id": 181,
+    "length": 1,
+    "solution": {
+     "type": "move",
+     "index": 2
+    },
+    "detourMoves": 0,
+    "origin": {
+     "method": "random",
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "raikou",
+         "moves": [
+          "scald",
+          "shadowball",
+          "thunderbolt"
+         ],
+         "hp": 59
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "volcanion",
+         "moves": [
+          "earthpower",
+          "flamethrower",
+          "sludgebomb",
+          "steameruption"
+         ],
+         "hp": 101
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 20,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "有効な手を打つだけでつまらない",
+    "ratedAt": "2026-10-26T09:31:13.091Z"
+   }
+  },
+  {
+   "order": 42,
+   "id": 16,
+   "length": 1,
+   "puzzle": {
+    "id": 16,
+    "length": 1,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 0,
+    "origin": {
+     "method": "random",
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "dragalge",
+         "moves": [
+          "focusblast",
+          "sludgewave"
+         ],
+         "hp": 60
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "jolteon",
+         "moves": [
+          "shadowball",
+          "thunderbolt"
+         ],
+         "hp": 49
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 8,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "有効な手を打つだけでつまらない",
+    "ratedAt": "2026-10-26T09:31:35.196Z"
+   }
+  },
+  {
+   "order": 43,
+   "id": 619,
+   "length": 3,
+   "puzzle": {
+    "id": 619,
+    "length": 3,
+    "solution": {
+     "type": "move",
+     "index": 0
+    },
+    "detourMoves": 2,
+    "origin": {
+     "method": "extend",
+     "from": 28,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "noivern",
+         "moves": [
+          "boomburst",
+          "flamethrower"
+         ],
+         "hp": 105
+        },
+        {
+         "species": "lugia",
+         "moves": [
+          "aeroblast",
+          "earthpower"
+         ],
+         "hp": 160
+        },
+        {
+         "species": "weezing",
+         "moves": [
+          "fireblast",
+          "gunkshot",
+          "sludgebomb"
+         ],
+         "hp": 30
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "wigglytuff",
+         "moves": [
+          "dazzlinggleam",
+          "fireblast"
+         ],
+         "hp": 170
+        },
+        {
+         "species": "victreebel",
+         "moves": [
+          "poisonjab",
+          "powerwhip",
+          "sludgewave"
+         ],
+         "hp": 31
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 25,
+    "fun": 2,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "ターン数は長いが、有効な手を連打するだけで面白くない",
+    "ratedAt": "2026-10-26T09:32:23.411Z"
+   }
+  },
+  {
+   "order": 44,
+   "id": 120,
+   "length": 2,
+   "puzzle": {
+    "id": 120,
+    "length": 2,
+    "solution": {
+     "type": "switch",
+     "index": 1
+    },
+    "detourMoves": 2,
+    "origin": {
+     "method": "random",
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "sandyshocks",
+         "moves": [
+          "earthpower",
+          "thunderbolt"
+         ],
+         "hp": 114
+        },
+        {
+         "species": "virizion",
+         "moves": [
+          "leafblade",
+          "stoneedge"
+         ],
+         "hp": 68
+        },
+        {
+         "species": "indeedee",
+         "moves": [
+          "dazzlinggleam",
+          "hypervoice",
+          "shadowball"
+         ],
+         "hp": 79
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "calyrexshadow",
+         "moves": [
+          "astralbarrage",
+          "psyshock"
+         ],
+         "hp": 105
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 1,
+    "gaveUp": false,
+    "seconds": 60,
+    "fun": 4,
+    "difficulty": 3,
+    "surprise": 4,
+    "comment": "裏のポケモンをあえて捨て、相手を一撃で倒せるイエッサンを死に出しする必要があり、面白い",
+    "ratedAt": "2026-10-26T09:34:14.128Z"
+   }
+  },
+  {
+   "order": 45,
+   "id": 1271,
+   "length": 5,
+   "puzzle": {
+    "id": 1271,
+    "length": 5,
+    "solution": {
+     "type": "move",
+     "index": 0
+    },
+    "detourMoves": 0,
+    "origin": {
+     "method": "extend",
+     "from": 1007,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "lycanrocdusk",
+         "moves": [
+          "accelerock",
+          "stoneedge"
+         ],
+         "hp": 69
+        }
+       ]
+      },
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "venomoth",
+         "moves": [
+          "bugbuzz",
+          "sludgewave"
+         ],
+         "hp": 99
+        },
+        {
+         "species": "lycanrocdusk",
+         "moves": [
+          "accelerock",
+          "stoneedge"
+         ],
+         "hp": 31
+        },
+        {
+         "species": "chandelure",
+         "moves": [
+          "energyball",
+          "fireblast",
+          "shadowball"
+         ],
+         "hp": 115
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 2,
+    "gaveUp": false,
+    "seconds": 41,
+    "fun": 3,
+    "difficulty": 2,
+    "surprise": 3,
+    "comment": "相手の素早さに注意する必要があり、構造は単純だが楽しめる",
+    "ratedAt": "2026-10-26T09:35:42.470Z"
+   }
+  },
+  {
+   "order": 46,
+   "id": 1371,
+   "length": 5,
+   "puzzle": {
+    "id": 1371,
+    "length": 5,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 3,
+    "origin": {
+     "method": "extend",
+     "from": 1167,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "chimecho",
+         "moves": [
+          "dazzlinggleam",
+          "psyshock"
+         ],
+         "hp": 148
+        },
+        {
+         "species": "golem",
+         "moves": [
+          "earthquake",
+          "stoneedge"
+         ],
+         "hp": 43
+        },
+        {
+         "species": "arceusbug",
+         "moves": [
+          "earthpower",
+          "fireblast"
+         ],
+         "hp": 152
+        }
+       ]
+      },
+      {
+       "active": 2,
+       "mons": [
+        {
+         "species": "wigglytuff",
+         "moves": [
+          "dazzlinggleam",
+          "fireblast"
+         ],
+         "hp": 153
+        },
+        {
+         "species": "empoleon",
+         "moves": [
+          "icebeam",
+          "surf"
+         ],
+         "hp": 13
+        },
+        {
+         "species": "hippowdon",
+         "moves": [
+          "earthquake",
+          "stoneedge"
+         ],
+         "hp": 41
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 2,
+    "gaveUp": false,
+    "seconds": 76,
+    "fun": 2,
+    "difficulty": 2,
+    "surprise": 1,
+    "comment": "有効な手を連打するだけで面白くない",
+    "ratedAt": "2026-10-26T09:38:08.675Z"
+   }
+  },
+  {
+   "order": 47,
+   "id": 550,
+   "length": 2,
+   "puzzle": {
+    "id": 550,
+    "length": 2,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 1,
+    "origin": {
+     "method": "extend",
+     "from": 295,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "phione",
+         "moves": [
+          "icebeam",
+          "scald"
+         ],
+         "hp": 122
+        }
+       ]
+      },
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "donphan",
+         "moves": [
+          "earthquake",
+          "iceshard"
+         ],
+         "hp": 104
+        },
+        {
+         "species": "dugtrio",
+         "moves": [
+          "earthquake",
+          "stoneedge"
+         ],
+         "hp": 60
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 8,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "同じワザを連打するだけで面白くない",
+    "ratedAt": "2026-10-26T09:38:24.578Z"
+   }
+  },
+  {
+   "order": 48,
+   "id": 905,
+   "length": 3,
+   "puzzle": {
+    "id": 905,
+    "length": 3,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 1,
+    "origin": {
+     "method": "extend",
+     "from": 543,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "okidogi",
+         "moves": [
+          "gunkshot",
+          "highhorsepower"
+         ],
+         "hp": 125
+        }
+       ]
+      },
+      {
+       "active": 1,
+       "mons": [
+        {
+         "species": "bronzong",
+         "moves": [
+          "earthquake",
+          "ironhead",
+          "psychic"
+         ],
+         "hp": 31
+        },
+        {
+         "species": "ogerponwellspring",
+         "moves": [
+          "playrough",
+          "powerwhip"
+         ],
+         "hp": 44
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 1,
+    "gaveUp": false,
+    "seconds": 14,
+    "fun": 3,
+    "difficulty": 2,
+    "surprise": 2,
+    "comment": "同じワザの連打が成果ではあるが、相手の交代を意識する必要がある",
+    "ratedAt": "2026-10-26T09:39:05.659Z"
+   }
+  },
+  {
+   "order": 49,
+   "id": 132,
+   "length": 2,
+   "puzzle": {
+    "id": 132,
+    "length": 2,
+    "solution": {
+     "type": "move",
+     "index": 0
+    },
+    "detourMoves": 1,
+    "origin": {
+     "method": "random",
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "frosmoth",
+         "moves": [
+          "bugbuzz",
+          "icebeam"
+         ],
+         "hp": 28
+        },
+        {
+         "species": "probopass",
+         "moves": [
+          "flashcannon",
+          "powergem"
+         ],
+         "hp": 117
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "delibird",
+         "moves": [
+          "drillrun",
+          "iceshard"
+         ],
+         "hp": 55
+        },
+        {
+         "species": "calyrexice",
+         "moves": [
+          "glaciallance",
+          "highhorsepower"
+         ],
+         "hp": 46
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 31,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "有効な手を連打するだけで面白くない",
+    "ratedAt": "2026-10-26T09:39:46.296Z"
+   }
+  },
+  {
+   "order": 50,
+   "id": 414,
+   "length": 2,
+   "puzzle": {
+    "id": 414,
+    "length": 2,
+    "solution": {
+     "type": "move",
+     "index": 1
+    },
+    "detourMoves": 0,
+    "origin": {
+     "method": "extend",
+     "from": 33,
+     "seed": 1
+    },
+    "state": {
+     "sides": [
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "pachirisu",
+         "moves": [
+          "discharge",
+          "thunderbolt"
+         ],
+         "hp": 28
+        }
+       ]
+      },
+      {
+       "active": 0,
+       "mons": [
+        {
+         "species": "medicham",
+         "moves": [
+          "bulletpunch",
+          "icepunch",
+          "poisonjab",
+          "zenheadbutt"
+         ],
+         "hp": 36
+        },
+        {
+         "species": "girafarig",
+         "moves": [
+          "dazzlinggleam",
+          "hypervoice",
+          "psychic",
+          "thunderbolt"
+         ],
+         "hp": 11
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "result": {
+    "solved": true,
+    "failures": 0,
+    "gaveUp": false,
+    "seconds": 9,
+    "fun": 1,
+    "difficulty": 1,
+    "surprise": 1,
+    "comment": "有効な手を連打するだけで面白くない",
+    "ratedAt": "2026-10-26T09:40:04.329Z"
+   }
+  }
+ ]
+}

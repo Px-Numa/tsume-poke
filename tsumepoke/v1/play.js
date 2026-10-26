@@ -250,4 +250,6 @@ async function main() {
 	rl.close();
 }
 
-main();
+module.exports = { showState, showAnswer, showRefutations, makeLineReader, askIndex, attempt };
+
+if (require.main === module) main();
