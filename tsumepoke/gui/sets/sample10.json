@@ -1,0 +1,10 @@
+{
+ "name": "sample10",
+ "description": "被験者ごとに、ターン数ごとに10問ずつ選ぶ（計50問）",
+ "puzzlesFile": "../v1/puzzles.json",
+ "mode": "sample",
+ "sample": {
+  "per": 10
+ },
+ "createdAt": "2026-11-07T17:11:29.387Z"
+}

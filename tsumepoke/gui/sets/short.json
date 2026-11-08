@@ -1,0 +1,13 @@
+{
+ "name": "short",
+ "description": "動作確認用の短い4問",
+ "puzzlesFile": "../v1/puzzles.json",
+ "mode": "fixed",
+ "ids": [
+  9,
+  188,
+  7,
+  309
+ ],
+ "createdAt": "2026-11-07T17:11:29.466Z"
+}

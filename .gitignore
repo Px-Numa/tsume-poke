@@ -21,3 +21,8 @@ node_modules/
 # 先行研究の要約（他の方の論文の内容を含むため公開しない）
 refs_summary.md
 desktop.ini
+
+# 被験者実験の記録（個人の回答を含むため公開しない）
+tsumepoke/gui/results/
+# ポケモンの画像（著作物のため公開しない。使ってよいか確かめてから手元に置く）
+tsumepoke/gui/public/sprites/
