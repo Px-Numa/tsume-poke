@@ -1066,7 +1066,7 @@ async function runDemo(done) {
 		await demoSay(`上の帯には残りのターン数が出ます。この問題では、相手がどう動いても ${g.meta.length} ターン以内に確実に勝てる手順を探すことになります。`, '#game-header');
 		await demoSay('場の右上にいるのが相手のポケモンで、左下にいるのがあなたのポケモンです。それぞれの名前とタイプ、HP のバーと数値、素早さを見ることができます。', '#field');
 		if (setting('showOpponentMoves')) await demoSay('この欄には相手の場のポケモンの技が並んでいます。バーはあなたの場のポケモンの HP を表していて、斜線の部分がその技を受けたときに減る分です。欄の下には相手のポケモンの一覧があります。', '#side-foe');
-		await demoSay('下の欄では使う技か交代先のポケモンを選びます。技のボタンに出ているのは、相手の場のポケモンに与えるダメージです。あなたの技は最低の乱数で、相手の技は最高の乱数で計算しています。欄の右側にはあなたのポケモンの一覧があります。', '#controls');
+		await demoSay('下の欄では使う技か交代先のポケモンを選びます。技のボタンに出ているのは、相手の場のポケモンに与えるダメージです。欄の右側にはあなたのポケモンの一覧があります。', '#controls');
 
 		const foeSide = () => S.game.view.sides[1];
 		const meSide = () => S.game.view.sides[0];
@@ -1169,12 +1169,13 @@ async function runQuickGuide() {
 	for (let i = 0; i < steps.length && !stop && S.game; i++) {
 		const [sel, text] = steps[i];
 		await new Promise(resolve => {
-			const timer = setTimeout(resolve, ms);
+			// ms が 0 のときは自動で進めず、ボタンを待つ。
+			const timer = ms > 0 ? setTimeout(resolve, ms) : null;
 			const go = () => { clearTimeout(timer); resolve(); };
 			showDemoBox([h('div', { class: 'demo-do guide' }, `操作確認 ${i + 1}/${steps.length}`), text,
-				h('div', { class: 'guide-bar' }, h('div', { style: { animationDuration: `${ms}ms` } }))], sel, [
+				ms > 0 ? h('div', { class: 'guide-bar' }, h('div', { style: { animationDuration: `${ms}ms` } })) : null], sel, [
 				h('button', { class: 'secondary', onclick: () => { stop = true; go(); } }, '閉じる'),
-				h('button', { class: 'primary', onclick: go }, '次へ')]);
+				h('button', { class: 'primary', onclick: go }, i === steps.length - 1 ? '終わる' : '次へ')]);
 		});
 	}
 	closeDemo();

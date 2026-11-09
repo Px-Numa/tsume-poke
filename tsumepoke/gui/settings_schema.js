@@ -93,7 +93,7 @@
 		{ key: 'menuTypeChart', group: 'メニュー', label: 'タイプ相性表を開けるようにする', type: 'bool', default: true, scope: 'experiment' },
 		{ key: 'menuRules', group: 'メニュー', label: 'ルールの確認を開けるようにする', type: 'bool', default: true, scope: 'experiment' },
 		{ key: 'menuQuickGuide', group: 'メニュー', label: '問題の画面に「操作確認」ボタンを出す（各欄の役割を数秒ずつ順に見せる）', type: 'bool', default: true, scope: 'experiment' },
-		{ key: 'quickGuideStepMs', group: 'メニュー', label: '操作確認で1つの説明を出す時間（ミリ秒）', type: 'number', min: 500, max: 10000, default: 2500, scope: 'display' },
+		{ key: 'quickGuideStepMs', group: 'メニュー', label: '操作確認で1つの説明を自動で次へ進めるまでの時間（ミリ秒、0 のときは自動で進めない）', type: 'number', min: 0, max: 10000, default: 0, scope: 'display' },
 		{ key: 'menuSettingsForParticipant', group: 'メニュー', label: '問題の画面にも設定ボタンを出す（実験の本番では切る）', type: 'bool', default: true, scope: 'display' },
 
 		// 実験の流れ
