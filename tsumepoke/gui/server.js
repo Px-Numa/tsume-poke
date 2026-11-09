@@ -37,13 +37,14 @@ const settings = () => Schema.resolve(readJson(SETTINGS_FILE, {}), adapter.featu
 const ratingItems = () => readJson(path.join(CONFIG, 'rating_items.json'), []);
 const surveyItems = () => readJson(path.join(CONFIG, 'survey_items.json'), []);
 
-function spriteList() {
-	const dir = path.join(PUBLIC, 'sprites');
+// sub は public/sprites の下のフォルダ（背面の画像は 'back'）。ポケモンの id → 画像のパスを返す。
+function spriteList(sub = '') {
+	const dir = path.join(PUBLIC, 'sprites', sub);
 	if (!fs.existsSync(dir)) return {};
 	const out = {};
 	for (const f of fs.readdirSync(dir)) {
 		const m = f.match(/^([a-z0-9]+)\.(png|gif|webp|jpg)$/);
-		if (m) out[m[1]] = f;
+		if (m) out[m[1]] = sub ? `${sub}/${f}` : f;
 	}
 	return out;
 }
@@ -129,6 +130,7 @@ route('GET', /^\/api\/meta$/, () => ({
 	surveyItems: surveyItems(),
 	sets: Sets.listSets(),
 	sprites: spriteList(),
+	spritesBack: spriteList('back'),
 }));
 
 route('POST', /^\/api\/settings$/, body => {

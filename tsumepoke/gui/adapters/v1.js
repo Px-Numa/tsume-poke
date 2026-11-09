@@ -45,12 +45,12 @@ const features = {
 
 function rules() {
 	return [
-		{ title: '問題の目的', body: '決められたターン数以内に、相手がどう動いても確実に勝てる手順を見つけます。正解の最初の一手は1つだけです。' },
-		{ title: '相手の動き', body: '相手は、あなたの勝ちを一番遅らせる手を選びます。逃れられる手があれば、その手を選びます。相手のポケモンが倒れたときの交代先も、あなたに一番不利なものを選びます。' },
-		{ title: 'ダメージ', body: `ダメージ乱数は固定です。あなたの技は最低乱数（${E.P1_ROLL}）、相手の技は最高乱数（${E.P2_ROLL}）で計算します。技は必ず当たり、急所には当たりません。10%のまひのような、確率で起こる追加効果は起こりません。` },
-		{ title: 'ポケモン', body: `全員レベル${LEVEL}、個体値${IV}、努力値${EV}、性格の補正なしです。特性・持ち物・状態異常・能力ランクの変化・テラスタルはありません。` },
-		{ title: '行動の順番', body: '交代は技より先に行われます。技は優先度の高い順、同じなら素早さの高い順に出ます。優先度も素早さも同じときは、相手が先に動きます。' },
-		{ title: '失敗', body: '選んだ手のせいで、残りのターン数以内に確実に勝てなくなった時点で失敗になります。遅れて勝てる手を選んでも失敗です。' },
+		{ title: '問題の目的', body: '相手がどう動いても、決められたターン数以内に確実に勝てる手順を見つけることが目的です。正解の最初の一手は1つしかありません。' },
+		{ title: '相手の動き', body: '相手はあなたの勝ちを一番遅らせる手を選びます。逃れられる手があれば必ずその手を選ぶことになります。相手のポケモンが倒れたときの交代先も、あなたにとって一番不利なポケモンを選んできます。' },
+		{ title: 'ダメージ', body: `ダメージの乱数は固定しています。あなたの技は最低乱数（${E.P1_ROLL}）で、相手の技は最高乱数（${E.P2_ROLL}）で計算します。技は必ず当たって急所には当たりません。10%のまひのように確率で起こる追加効果も起こらないことになっています。` },
+		{ title: 'ポケモン', body: `ポケモンは全員がレベル${LEVEL}で、個体値は${IV}、努力値は${EV}にそろえています。性格の補正はなく、特性・持ち物・状態異常・能力ランクの変化・テラスタルもありません。` },
+		{ title: '行動の順番', body: '交代は技より先に行われます。技は優先度の高い順に出て、優先度が同じなら素早さの高い順になります。優先度も素早さも同じときは相手が先に動くことになっています。' },
+		{ title: '失敗', body: '選んだ手のせいで残りのターン数以内に確実に勝てなくなった時点で失敗になります。勝てる手であっても、勝つまでに残りのターン数を超えてしまう手は失敗です。' },
 	];
 }
 
@@ -206,7 +206,7 @@ class Game {
 		}
 		if (def.result.winner === 1 || def.distance > this.remaining - 1) {
 			this.phase = 'failed';
-			this.failReason = def.result.winner === 1 ? 'あなたのポケモンがすべて倒れた' : `この手では、残り ${this.remaining - 1} ターン以内に確実に勝つことができなくなった`;
+			this.failReason = def.result.winner === 1 ? 'あなたのポケモンがすべて倒れた' : `この手では残り ${this.remaining - 1} ターン以内に確実に勝つことができなくなった`;
 			events.push({ kind: 'result', side: null, text: this.failReason, hp: null });
 			return { events, view: this.view() };
 		}
@@ -230,7 +230,7 @@ class Game {
 		const events = [{ kind: 'replace', side: 0, text: `あなたは ${speciesName(this.state.sides[0].mons[choice.index].species)} を出した`, active: { side: 0, index: choice.index }, hp: null }];
 		if (!this.solver.winWithin(this.state, this.remaining)) {
 			this.phase = 'failed';
-			this.failReason = `このポケモンでは、残り ${this.remaining} ターン以内に確実に勝つことができなくなった`;
+			this.failReason = `このポケモンでは残り ${this.remaining} ターン以内に確実に勝つことができなくなった`;
 			events.push({ kind: 'result', side: null, text: this.failReason, hp: null });
 		} else {
 			this.phase = 'choose';
