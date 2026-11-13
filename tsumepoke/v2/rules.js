@@ -4,7 +4,7 @@
 // ルールは「PS のどのデータを使うか（mod）」「技の候補をどのランダムバトルの型から取るか（sets）」
 // 「PS と突き合わせるときの対戦形式（format）」「メガシンカした姿を候補に入れるか（megas）」の組で表す。
 // speciesClause は、同じポケモン（メガシンカした姿と元の姿も同じとみなす）を同じ側に2匹入れないかどうか。
-// megaLimit は、同じ側に入れられるメガシンカした姿の数（null なら制限なし）。
+// megaLimit は、同じ側に入れられるメガシンカした姿の数（null なら制限なし）。メガシンカした姿を入れるときは、どのルールでも1匹までにする。
 // 対戦の計算は engine.js で行うので、ここに足せるのは第9世代と同じ仕組みのルールだけになる。
 // 足したルールは verify_damage.js と verify_turn.js で PS と一致するのを確かめてから使う。
 //
@@ -61,7 +61,9 @@ function currentRule() {
 	const env = process.env.TSUMEPOKE_MEGAS;
 	const megas = env === undefined ? base.megas : env === '1';
 	const tag = id + (megas === base.megas ? '' : megas ? '_megas' : '_nomegas');
-	return { id, ...base, megas, tag };
+	// メガシンカした姿を入れるときは、ルールに書いていなくても同じ側に1匹までにする。
+	const megaLimit = megas ? Math.min(base.megaLimit ?? 1, 1) : base.megaLimit;
+	return { id, ...base, megas, megaLimit, tag };
 }
 
 module.exports = { RULES, DEFAULT_RULE, readRuleArgs, currentRule };
