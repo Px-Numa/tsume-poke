@@ -1,7 +1,7 @@
 'use strict';
 // 被験者実験用 GUI のサーバ。研究室の PC で動かし、同じ PC のブラウザで開く。
 //
-// 実行方法：node tsumepoke/gui/server.js [ポート番号] [--engine v1]
+// 実行方法：node tsumepoke/gui/server.js [ポート番号] [--engine v1] [--engine v2 --rule champions]
 //   例：node tsumepoke/gui/server.js        → http://localhost:8787/ を開く
 // npm のパッケージは使わない。localhost からの接続だけを受け付ける。
 //
@@ -33,7 +33,25 @@ function writeJson(file, data) {
 	fs.renameSync(file + '.tmp', file);
 }
 
-const settings = () => Schema.resolve(readJson(SETTINGS_FILE, {}), adapter.features);
+// perPuzzles の設定（プレイデモと練習の問題の id）は、問題のファイルごとに byPuzzles に分けて保存する。
+// Ver1 の問題のファイルでは、これまでどおり一番上に保存する。
+const V1_PUZZLES = '../v1/puzzles.json';
+const PUZZLES_FILE = adapter.puzzlesFile || V1_PUZZLES;
+const SCOPED = PUZZLES_FILE !== V1_PUZZLES;
+function settings() {
+	const saved = readJson(SETTINGS_FILE, {});
+	const merged = { ...saved };
+	if (SCOPED) {
+		const scoped = (saved.byPuzzles || {})[PUZZLES_FILE] || {};
+		for (const s of Schema.SETTINGS) {
+			if (!s.perPuzzles) continue;
+			if (scoped[s.key] !== undefined) merged[s.key] = scoped[s.key];
+			else if (adapter.puzzleDefaults && adapter.puzzleDefaults[s.key] !== undefined) merged[s.key] = adapter.puzzleDefaults[s.key];
+			else delete merged[s.key];
+		}
+	}
+	return Schema.resolve(merged, adapter.features);
+}
 const ratingItems = () => readJson(path.join(CONFIG, 'rating_items.json'), []);
 const surveyItems = () => readJson(path.join(CONFIG, 'survey_items.json'), []);
 
@@ -135,7 +153,15 @@ route('GET', /^\/api\/meta$/, () => ({
 
 route('POST', /^\/api\/settings$/, body => {
 	const saved = readJson(SETTINGS_FILE, {});
-	for (const s of Schema.SETTINGS) if (body[s.key] !== undefined) saved[s.key] = body[s.key];
+	for (const s of Schema.SETTINGS) {
+		if (body[s.key] === undefined) continue;
+		if (SCOPED && s.perPuzzles) {
+			saved.byPuzzles = saved.byPuzzles || {};
+			saved.byPuzzles[PUZZLES_FILE] = { ...saved.byPuzzles[PUZZLES_FILE], [s.key]: body[s.key] };
+		} else {
+			saved[s.key] = body[s.key];
+		}
+	}
 	writeJson(SETTINGS_FILE, saved);
 	return settings();
 });
@@ -157,8 +183,10 @@ route('POST', /^\/api\/participant$/, body => {
 	if (!p) {
 		const s = settings();
 		const { set, items } = Sets.assign(body.set, pid, s.shuffleOrder);
+		// ルールの違う問題のセットは、登録の時点で止める。
+		if (adapter.checkPuzzle) for (const it of items) adapter.checkPuzzle(it.puzzle);
 		p = {
-			participant: pid, set: body.set, setName: set.name, engine: adapter.id, createdAt: new Date().toISOString(),
+			participant: pid, set: body.set, setName: set.name, engine: adapter.id, rule: adapter.rule || null, createdAt: new Date().toISOString(),
 			settings: s, survey: null, flow: {}, practice: [], items,
 		};
 		saveParticipant(p);
@@ -195,13 +223,13 @@ route('POST', /^\/api\/game\/start$/, body => {
 		entry.total = p.items.length;
 	} else if (body.kind === 'practice') {
 		const ids = String(s.practicePuzzleIds).split(',').map(x => Number(x.trim())).filter(Number.isInteger);
-		entry.puzzle = Sets.puzzleById(ids[body.index]);
+		entry.puzzle = Sets.puzzleById(ids[body.index], PUZZLES_FILE);
 		entry.order = body.index + 1;
 		entry.total = ids.length;
 	} else if (body.kind === 'demo') {
-		entry.puzzle = Sets.puzzleById(Number(s.demoPuzzleId));
+		entry.puzzle = Sets.puzzleById(Number(s.demoPuzzleId), PUZZLES_FILE);
 	} else {
-		entry.puzzle = Sets.puzzleById(Number(body.puzzleId));
+		entry.puzzle = Sets.puzzleById(Number(body.puzzleId), PUZZLES_FILE);
 	}
 	newAttempt(entry);
 	games.set(entry.gameId, entry);

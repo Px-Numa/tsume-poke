@@ -1,0 +1,13 @@
+{
+ "name": "champions_short",
+ "description": "動作確認用の短い4問（チャンピオンズ）",
+ "puzzlesFile": "../v2/puzzles_champions.json",
+ "mode": "fixed",
+ "ids": [
+  21,
+  5,
+  31,
+  603
+ ],
+ "createdAt": "2026-11-13T10:32:12.524Z"
+}
