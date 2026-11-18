@@ -1,6 +1,6 @@
 {
  "name": "sample10",
- "description": "被験者ごとに、ターン数ごとに10問ずつ選ぶ（計50問）",
+ "description": "ターン数ごとに10問ずつ選ぶ",
  "puzzlesFile": "../v1/puzzles.json",
  "mode": "sample",
  "sample": {

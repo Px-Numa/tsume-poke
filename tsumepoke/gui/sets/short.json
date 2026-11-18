@@ -1,6 +1,6 @@
 {
  "name": "short",
- "description": "動作確認用の短い4問",
+ "description": "動作確認用の短い問題",
  "puzzlesFile": "../v1/puzzles.json",
  "mode": "fixed",
  "ids": [

@@ -16,7 +16,18 @@ function listSets() {
 	if (!fs.existsSync(SETS_DIR)) return [];
 	return fs.readdirSync(SETS_DIR).filter(f => f.endsWith('.json')).map(f => {
 		const set = JSON.parse(fs.readFileSync(path.join(SETS_DIR, f), 'utf8'));
-		return { file: f.replace(/\.json$/, ''), name: set.name, description: set.description, mode: set.mode };
+		const puzzlesFile = set.puzzlesFile || '../v1/puzzles.json';
+		let count, lengths = null;
+		if (set.mode === 'sample') {
+			lengths = set.sample.lengths || [...new Set(loadPuzzles(set).map(p => p.length))].sort((a, b) => a - b);
+			count = set.sample.per * lengths.length;
+		} else {
+			count = set.ids.length;
+		}
+		return {
+			file: f.replace(/\.json$/, ''), name: set.name, description: set.description, mode: set.mode, puzzlesFile,
+			count, ids: set.ids || null, per: set.sample ? set.sample.per : null, lengths,
+		};
 	});
 }
 

@@ -83,5 +83,13 @@
  "demoBlink": true,
  "demoInteractive": true,
  "menuQuickGuide": true,
- "demoReplay": true
+ "demoReplay": true,
+ "quickGuideStepMs": 0,
+ "demoRingOnTop": true,
+ "byPuzzles": {
+  "../v2/puzzles_champions.json": {
+   "demoPuzzleId": 31,
+   "practicePuzzleIds": "21,5"
+  }
+ }
 }

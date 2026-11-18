@@ -1,6 +1,6 @@
 {
  "name": "ratings1",
- "description": "rate.js で評価した50問（乱数の種1）と同じ問題",
+ "description": "Ver1 で自分で評価した問題（rate.js、乱数の種1）",
  "puzzlesFile": "../v1/puzzles.json",
  "mode": "fixed",
  "ids": [

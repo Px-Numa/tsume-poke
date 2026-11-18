@@ -38,6 +38,7 @@ function writeJson(file, data) {
 const V1_PUZZLES = '../v1/puzzles.json';
 const PUZZLES_FILE = adapter.puzzlesFile || V1_PUZZLES;
 const SCOPED = PUZZLES_FILE !== V1_PUZZLES;
+const PUZZLE_COUNT = readJson(path.join(__dirname, PUZZLES_FILE), []).length;
 function settings() {
 	const saved = readJson(SETTINGS_FILE, {});
 	const merged = { ...saved };
@@ -146,7 +147,9 @@ route('GET', /^\/api\/meta$/, () => ({
 	settings: settings(),
 	ratingItems: ratingItems(),
 	surveyItems: surveyItems(),
-	sets: Sets.listSets(),
+	sets: Sets.listSets().filter(s => s.puzzlesFile === PUZZLES_FILE),
+	puzzlesFile: PUZZLES_FILE,
+	puzzleCount: PUZZLE_COUNT,
 	sprites: spriteList(),
 	spritesBack: spriteList('back'),
 }));
@@ -180,8 +183,19 @@ route('GET', /^\/api\/results$/, () => {
 route('POST', /^\/api\/participant$/, body => {
 	const pid = String(body.participant || '').trim();
 	let p = loadParticipant(pid);
-	if (!p) {
+	if (p) {
+		// 別の版やルールで登録した ID は、このサーバーでは再開しない。
+		if (p.engine !== adapter.id || (p.rule || null) !== (adapter.rule || null)) {
+			const where = p.engine + (p.rule ? `・ルール ${p.rule}` : '');
+			const here = adapter.id + (adapter.rule ? `・ルール ${adapter.rule}` : '');
+			throw new Error(`被験者 ID「${pid}」は ${where} の問題セット「${p.setName}」で登録済みのため、このサーバー（${here}）では再開できません。別の ID を使ってください`);
+		}
+		return { ...participantSummary(p), resumed: true, setChanged: body.set !== p.set };
+	} else {
 		const s = settings();
+		if (Sets.listSets().find(x => x.file === body.set)?.puzzlesFile !== PUZZLES_FILE) {
+			throw new Error(`問題セット「${body.set}」は、このサーバーの問題のファイル（${PUZZLES_FILE}）の問題ではない`);
+		}
 		const { set, items } = Sets.assign(body.set, pid, s.shuffleOrder);
 		// ルールの違う問題のセットは、登録の時点で止める。
 		if (adapter.checkPuzzle) for (const it of items) adapter.checkPuzzle(it.puzzle);

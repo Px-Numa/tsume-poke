@@ -246,9 +246,23 @@ function showReception() {
 	S.participant = null;
 	renderMenu();
 	setProgress('');
-	const pid = h('input', { type: 'text', placeholder: '例：p01', style: { width: '160px' } });
-	const set = h('select', {}, S.meta.sets.map(s => h('option', { value: s.file }, `${s.name}（${s.mode === 'sample' ? '被験者ごとに選ぶ' : '全員同じ問題'}）`)));
-	const freeId = h('input', { type: 'number', min: 0, value: 1277, style: { width: '110px' } });
+	const pid = h('input', { type: 'text', placeholder: '例：p01', autocomplete: 'off', style: { width: '160px' } });
+	const setLabel = s => `${s.description || s.name}：${s.count}問、${s.mode === 'sample' ? '被験者ごとに違う問題' : '全員に同じ問題'}`;
+	const set = h('select', {}, S.meta.sets.map(s => h('option', { value: s.file }, setLabel(s))));
+	const setInfo = h('p', { class: 'muted' });
+	// 選んだセットの中身を下に出す。
+	const showSetInfo = () => {
+		const s = S.meta.sets.find(x => x.file === set.value);
+		if (!s) return setInfo.replaceChildren();
+		const how = s.mode === 'sample'
+			? `被験者ごとに、${s.lengths.join('・')}ターンの問題を${s.per}問ずつ乱数で選ぶ（同じ ID なら同じ問題になる）`
+			: `問題の id：${s.ids.join(', ')}`;
+		const order = setting('shuffleOrder') ? '出す順番は被験者ごとにシャッフルする' : '出す順番は上の id の順';
+		setInfo.replaceChildren(`セット名 ${s.name}（${s.puzzlesFile}）。${how}。${order}。`);
+	};
+	set.addEventListener('change', showSetInfo);
+	showSetInfo();
+	const freeId = h('input', { type: 'number', min: 0, placeholder: '例：12', autocomplete: 'off', style: { width: '110px' } });
 	show(
 		h('div', { class: 'card' },
 			h('h2', {}, '実験を始める'),
@@ -258,15 +272,26 @@ function showReception() {
 					if (!pid.value.trim()) return alert('被験者 ID を入れてください');
 					try {
 						S.participant = pid.value.trim();
-						S.summary = await api('POST', '/api/participant', { participant: S.participant, set: set.value });
+						const summary = await api('POST', '/api/participant', { participant: S.participant, set: set.value });
+						// 再開する ID の問題セットが選んだものと違えば、登録時のセットで続けるか確かめる。
+						if (summary.setChanged && !confirm(`被験者 ID「${S.participant}」は問題セット「${summary.setName}」で登録済みです。選んだセットではなく「${summary.setName}」の続きから再開しますか？\n新しく始めるときは、別の ID を使ってください。`)) {
+							S.participant = null;
+							return;
+						}
+						S.summary = summary;
 						nextStep();
 					} catch (e) { showError(e); }
 				} }, '開始・再開')),
-			S.meta.sets.length ? null : h('p', { class: 'fail' }, '問題セットがありません。make_set.js で作ってください。')),
+			setInfo,
+			S.meta.sets.length ? null : h('p', { class: 'fail' }, `このサーバーの問題のファイル（${S.meta.puzzlesFile}）を使う問題セットがありません。make_set.js で作ってください。`)),
 		h('div', { class: 'card' },
 			h('h2', {}, '実験者用'),
 			h('div', { class: 'row' }, '問題を選んで解く（記録しない）：id', freeId,
-				h('button', { class: 'secondary', onclick: () => startGame({ kind: 'free', puzzleId: Number(freeId.value) }) }, '解く')),
+				h('button', { class: 'secondary', onclick: () => {
+					if (freeId.value.trim() === '') return alert('問題の id を入れてください');
+					startGame({ kind: 'free', puzzleId: Number(freeId.value) });
+				} }, '解く')),
+				h('p', { class: 'muted' }, `id は ${S.meta.puzzlesFile} の問題の番号（0〜${S.meta.puzzleCount - 1}）。`),
 			h('div', { class: 'row', style: { marginTop: '10px' } },
 				h('button', { class: 'secondary', onclick: openSettings }, '設定'),
 				h('button', { class: 'secondary', onclick: openResults }, '記録の一覧'),

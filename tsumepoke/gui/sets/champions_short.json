@@ -1,6 +1,6 @@
 {
  "name": "champions_short",
- "description": "動作確認用の短い4問（チャンピオンズ）",
+ "description": "チャンピオンズの動作確認用の短い問題",
  "puzzlesFile": "../v2/puzzles_champions.json",
  "mode": "fixed",
  "ids": [
