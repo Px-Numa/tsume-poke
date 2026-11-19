@@ -88,7 +88,7 @@
  "demoRingOnTop": true,
  "byPuzzles": {
   "../v2/puzzles_champions.json": {
-   "demoPuzzleId": 31,
+   "demoPuzzleId": 6417,
    "practicePuzzleIds": "21,5"
   }
  }

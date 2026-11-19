@@ -305,7 +305,7 @@ const puzzlesFile = `../v2/puzzles_${RULE.tag}.json`;
 // チャンピオンズの値は、Ver1 の初期値（7、9、188）と同じ形の問題（ターン数、匹数、正解の初手の種類）から選んだ。
 const PUZZLE_DEFAULTS = {
 	gen9: { demoPuzzleId: 7, practicePuzzleIds: '9,188' },
-	champions: { demoPuzzleId: 31, practicePuzzleIds: '21,5' },
+	champions: { demoPuzzleId: 6417, practicePuzzleIds: '21,5' },
 };
 const puzzleDefaults = PUZZLE_DEFAULTS[RULE.tag] || null;
 
