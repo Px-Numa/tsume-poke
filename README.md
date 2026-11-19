@@ -15,7 +15,7 @@ PS 本体はこのリポジトリに含めていないので、同じ階層に c
 ```bash
 git clone https://github.com/smogon/pokemon-showdown.git
 cd pokemon-showdown
-git checkout b1156ff19204e48089e2384eb2c9c1a8004f57ce
+git checkout 074174d9f2660580206a100a711d411bf93308e4
 npm install
 npm run build
 cd ..
@@ -23,6 +23,10 @@ cd ..
 
 commit を固定しているのは、ここで使っている `Battle` クラスの直接操作（局面の注入、`toJSON`/`fromJSON` による複製、乱数の差し替え）が、PS の文書化されていない部分にあたるためである。
 PS 自身も「文書化されていない API は予告なく変わる」と注意している。
+2026-10-23 に `b1156ff` からこの commit に上げた。詰めポケ Ver2 の PS との突き合わせ（`tsumepoke/v2/README.md`）は、この commit で行っている。
+
+`tsumepoke/` の詰めポケ（Ver1、Ver1.1、Ver2）と被験者実験用の GUI も、ポケモンと技のデータを PS 本体から読むので、上の準備が要る。PS 本体のほかに npm のパッケージは使っていない。
+ポケモンの画像は著作物なのでこのリポジトリに含めていない。GUI で画像を出すには、`node tsumepoke/gui/fetch_sprites.js` で取ってくる（インターネットへの接続が要る。画像がなくても、頭文字のアイコンで動く）。詳しくは `tsumepoke/gui/README.md` にある。
 
 ## スクリプト
 

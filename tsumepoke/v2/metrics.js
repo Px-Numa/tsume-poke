@@ -25,7 +25,7 @@ function actionLabel(state, sideIndex, a) {
 	return a.type === 'move' ? E.activeMon(side).moves[a.index] : '>' + side.mons[a.index].species;
 }
 
-// 解答の手順を返す。各ターンは { me, action, foe, foeAction, greedyWins, foeReplace, meReplace }。
+// 解答の手順を返す。各ターンは { me, action, foe, foeAction, greedyWins, winCount, foeReplace, meReplace }。
 // action と foeAction は技 ID か「>交代先の種族 ID」。
 function answerLine(puzzle, solver = new Solver()) {
 	let state = puzzle.state;
@@ -45,6 +45,8 @@ function answerLine(puzzle, solver = new Solver()) {
 			foe: E.activeMon(state.sides[1]).species,
 			foeAction: actionLabel(state, 1, def.action),
 			greedyWins,
+			// そのターンに残りターン数以内に勝てる手の数（2以上なら、解答の手のほかにも勝てる手がある）。
+			winCount: wins.length,
 		};
 		steps.push(step);
 		if (def.result.winner === 0) break;
