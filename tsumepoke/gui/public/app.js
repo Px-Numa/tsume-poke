@@ -109,7 +109,7 @@ function renderMenu() {
 	const items = [];
 	if (setting('menuTypeChart')) items.push(h('button', { onclick: openTypeChart }, 'タイプ相性表'));
 	if (setting('menuRules')) items.push(h('button', { onclick: openRules }, 'ルール'));
-	if (S.game && setting('enableDamageTable')) items.push(h('button', { onclick: openDamageTable }, 'ダメージ表'));
+	if (S.game && setting('enableDamageTable')) items.push(h('button', { id: 'menu-damage', onclick: openDamageTable }, 'ダメージ表'));
 	if (S.game && S.game.meta.kind !== 'demo' && setting('menuQuickGuide')) items.push(h('button', { onclick: runQuickGuide }, '操作確認'));
 	if (!S.game || setting('menuSettingsForParticipant')) items.push(h('button', { onclick: openSettings }, '設定'));
 	menu.replaceChildren(...items);
@@ -492,9 +492,10 @@ function speedTag(v, s) {
 	const foe = v.sides[1 - s].mons[v.sides[1 - s].active];
 	if (me.hp <= 0 || foe.hp <= 0) return null;
 	const other = s === 0 ? '相手' : 'あなた';
-	if (me.stats.spe > foe.stats.spe) return h('span', { class: 'tag fast' }, `${other}より速い`);
-	if (me.stats.spe < foe.stats.spe) return h('span', { class: 'tag' }, `${other}より遅い`);
-	return h('span', { class: 'tag' }, '同じ速さ（相手が先に動く）');
+	const tag = (cls, text) => withTerm(h('span', { class: 'tag speed ' + cls }, text), '素早さ');
+	if (me.stats.spe > foe.stats.spe) return tag('fast', `▲ ${other}より速い`);
+	if (me.stats.spe < foe.stats.spe) return tag('slow', `▼ ${other}より遅い`);
+	return tag('same', '＝ 同じ速さ（相手が先に動く）');
 }
 
 function monCard(v, s, mon, withFoeMoves = true) {
@@ -507,7 +508,7 @@ function monCard(v, s, mon, withFoeMoves = true) {
 			setting('showHpNumbers') ? `HP ${mon.hp} / ${mon.maxhp}` : '',
 			setting('showHpPercent') ? `（${(ratio * 100).toFixed(1)}%）` : ''),
 		h('div', { class: 'tags' },
-			setting('showSpeed') ? h('span', { class: 'tag' }, `素早さ ${mon.stats.spe}`) : null,
+			setting('showSpeed') ? h('span', { class: 'tag' }, termify('素早さ'), ` ${mon.stats.spe}`) : null,
 			speedTag(v, s),
 			feature('status') && setting('showStatus') && mon.status ? h('span', { class: 'tag' }, mon.status) : null,
 			feature('abilities') && setting('showAbility') && mon.ability ? h('span', { class: 'tag' }, `特性 ${mon.ability}`) : null,
@@ -540,9 +541,9 @@ function moveLine(mv, target, cell) {
 	return h('div', { class: 'foe-move' },
 		h('div', {},
 			h('span', { class: 'type', style: { background: TYPE_COLORS[mv.type] || '#888' } }, mv.typeName),
-			h('span', {}, mv.name),
-			setting('showMoveDetails') ? h('span', { class: 'muted' }, `${mv.category}・威力 ${mv.power}${mv.priority ? `・優先度 ${mv.priority > 0 ? '+' : ''}${mv.priority}` : ''}`) : null),
-		target && cell ? h('div', { class: 'fm-dmg' }, dmgBar(target, cell), h('b', {}, formatDamage(cell)), setting('markKO') && cell.ko ? h('span', { class: 'ko' }, '倒せる') : null) : null);
+			h('span', { class: 'mvname' }, mv.name),
+			setting('showMoveDetails') ? h('span', { class: 'muted' }, termify(`${mv.category}・威力 ${mv.power}${mv.priority ? `・優先度 ${mv.priority > 0 ? '+' : ''}${mv.priority}` : ''}`)) : null),
+		target && cell ? h('div', { class: 'fm-dmg' }, dmgBar(target, cell), h('b', { class: 'dmgnum' }, formatDamage(cell)), setting('markKO') && cell.ko ? h('span', { class: 'ko' }, '倒せる') : null) : null);
 }
 
 // 受ける側の HP バーに、ダメージで減る分を斜線で重ねて出す。
@@ -639,24 +640,85 @@ function monTooltip(v, s, m) {
 
 let tooltipEl = null;
 let tooltipAnchor = null;
-function attachTooltip(el, make, logKind) {
-	el.addEventListener('mouseenter', e => {
-		tooltipEl = h('div', { class: 'tooltip' }, make());
-		document.body.append(tooltipEl);
-		tooltipAnchor = el;
-		placeTooltip(el);
+// 説明を付けた要素 → { make, logKind, kind }。用語の説明は、ボタンの説明の内側にも付く。
+const tooltipOf = new WeakMap();
+
+function showTooltip(el) {
+	const t = tooltipOf.get(el);
+	if (tooltipEl) tooltipEl.remove();
+	tooltipEl = h('div', { class: 'tooltip' + (t.kind === 'term' ? ' term-tip' : '') }, t.make());
+	document.body.append(tooltipEl);
+	tooltipAnchor = el;
+	placeTooltip(el, t.kind);
+}
+
+// kind が 'mon' の説明（ポケモンの詳しい情報）は、設定が ON ならバトルログの欄に重ねて出す。
+function attachTooltip(el, make, logKind, kind = 'mon') {
+	tooltipOf.set(el, { make, logKind, kind });
+	el.setAttribute('data-tt', '');
+	el.addEventListener('mouseenter', () => {
+		showTooltip(el);
 		if (logKind) uiEvent(logKind.startsWith('hover') ? logKind : 'hover:' + logKind);
 	});
-	el.addEventListener('mouseleave', () => { if (tooltipEl) tooltipEl.remove(); tooltipEl = null; });
+	el.addEventListener('mouseleave', e => {
+		if (tooltipEl) tooltipEl.remove();
+		tooltipEl = null;
+		// 用語から外の要素に戻ったときは、外の要素の説明を出し直す。
+		const outer = e.relatedTarget instanceof Element && e.relatedTarget.closest('[data-tt]');
+		if (outer && outer !== el && outer.contains(el)) showTooltip(outer);
+	});
+}
+
+// 用語の短い解説。
+const GLOSSARY = {
+	'優先度': '技を出す順番を決める値。優先度の高い技は、素早さに関係なく先に出る。同じ優先度なら素早さの高いほうが先に動く。',
+	'素早さ': '先に動く順番を決める値。優先度が同じ技どうしなら、素早さの高いほうが先に動く。同じ値なら相手が先に動く。',
+	'威力': '技の強さ。大きいほどダメージが大きい。',
+	'物理': '攻撃する側の「攻撃」と、受ける側の「防御」でダメージが決まる技。',
+	'特殊': '攻撃する側の「特攻」と、受ける側の「特防」でダメージが決まる技。',
+	'命中': '技が当たる確率（%）。',
+};
+const GLOSSARY_RE = new RegExp(`(${Object.keys(GLOSSARY).join('|')})`);
+
+// 文の中の用語を、マウスを乗せると解説が出る要素にして返す。
+function termify(text) {
+	if (!setting('termTooltip')) return text;
+	return text.split(GLOSSARY_RE).filter(Boolean).map(part => {
+		if (!GLOSSARY[part]) return part;
+		const el = h('span', { class: 'term' }, part);
+		attachTooltip(el, () => [h('b', {}, part), '：', GLOSSARY[part]], `hover:term:${part}`, 'term');
+		return el;
+	});
+}
+
+// 要素全体に用語の解説を付ける。
+function withTerm(el, word) {
+	if (!setting('termTooltip')) return el;
+	el.classList.add('term');
+	attachTooltip(el, () => [h('b', {}, word), '：', GLOSSARY[word]], `hover:term:${word}`, 'term');
+	return el;
 }
 
 // 説明を、乗せた要素の右、左、下、上の順に、要素に重ならず画面に収まる所へ置く。
+// ポケモンの詳しい情報は、設定が ON ならバトルログの欄にぴったり重ねる。
 // 説明も拡大しているときは、位置を倍率で割って指定する。
-function placeTooltip(anchor) {
+function placeTooltip(anchor, kind = 'mon') {
 	if (!tooltipEl || !anchor || !anchor.isConnected) return;
 	tooltipEl.style.left = '0px';
 	tooltipEl.style.top = '0px';
 	const z = parseFloat(getComputedStyle(tooltipEl).zoom) || 1;
+	const logEl = kind === 'mon' && setting('tooltipOnLog') && document.querySelector('.game .log');
+	if (logEl) {
+		const g = logEl.getBoundingClientRect();
+		tooltipEl.classList.add('on-log');
+		Object.assign(tooltipEl.style, { width: `${g.width / z}px`, maxWidth: 'none', maxHeight: `${g.height / z}px` });
+		tooltipEl.style.left = (g.left / z) + 'px';
+		tooltipEl.style.top = (g.top / z) + 'px';
+		const r = tooltipEl.getBoundingClientRect();
+		if (Math.abs(r.left - g.left) > 0.5 && r.left > 0) tooltipEl.style.left = (g.left / z) * (g.left / r.left) + 'px';
+		if (Math.abs(r.top - g.top) > 0.5 && r.top > 0) tooltipEl.style.top = (g.top / z) * (g.top / r.top) + 'px';
+		return;
+	}
 	const a = anchor.getBoundingClientRect();
 	const t = tooltipEl.getBoundingClientRect();
 	const W = window.innerWidth, H = window.innerHeight, gap = 8, m = 8;
@@ -722,10 +784,10 @@ function renderControls() {
 		const cell = rows ? rows[c.index][target] : null;
 		const btn = h('button', { class: 'movebtn', style: { background: TYPE_COLORS[mv.type] || '#888' }, onclick: () => act(c), 'data-move': c.index },
 			h('div', { class: 'mname' }, mv.name),
-			setting('showMoveDetails') ? h('div', { class: 'mdetail' }, `${mv.typeName}・${mv.category}・威力 ${mv.power}${mv.priority ? `・優先度 ${mv.priority > 0 ? '+' : ''}${mv.priority}` : ''}${feature('accuracy') && setting('showMoveAccuracy') && mv.accuracy ? `・命中 ${mv.accuracy}` : ''}`) : null,
-			setting('showDamageOnMoves') && cell ? h('div', { class: 'mdmg' }, '→ ', spriteIcon(targetMon, 'tiny'), `${targetMon.name} に ${formatDamage(cell)}`, setting('markKO') && cell.ko ? h('span', { class: 'ko' }, '倒せる') : null) : null,
+			setting('showMoveDetails') ? h('div', { class: 'mdetail' }, termify(`${mv.typeName}・${mv.category}・威力 ${mv.power}${mv.priority ? `・優先度 ${mv.priority > 0 ? '+' : ''}${mv.priority}` : ''}${feature('accuracy') && setting('showMoveAccuracy') && mv.accuracy ? `・命中 ${mv.accuracy}` : ''}`)) : null,
+			setting('showDamageOnMoves') && cell ? h('div', { class: 'mdmg' }, '→ ', spriteIcon(targetMon, 'tiny'), `${targetMon.name} に `, h('span', { class: 'dmgnum' }, formatDamage(cell)), setting('markKO') && cell.ko ? h('span', { class: 'ko' }, '倒せる') : null) : null,
 			setting('showDamageOnMoves') && cell ? dmgBar(targetMon, cell) : null);
-		if (setting('showMoveDescription') && mv.description) attachTooltip(btn, () => mv.description, `hover:move:${c.index}`);
+		if (setting('showMoveDescription') && mv.description) attachTooltip(btn, () => mv.description, `hover:move:${c.index}`, 'note');
 		else if (setting('recordHover')) btn.addEventListener('mouseenter', () => uiEvent(`hover:move:${c.index}`));
 		return btn;
 	})));
@@ -734,7 +796,7 @@ function renderControls() {
 		out.push(h('h4', {}, '交代'));
 		out.push(h('div', { class: 'switches', id: 'switches' }, switches.map(c => {
 			const m = v.sides[0].mons[c.index];
-			const btn = h('button', { class: 'switchbtn', onclick: () => act(c), 'data-switch': c.index }, spriteIcon(m), h('b', {}, m.name), h('span', { class: 'sw-types' }, ' ' + m.types.map(t => t.name).join('/')), h('br'), h('span', { class: 'muted' }, `HP ${m.hp}/${m.maxhp}　素早さ ${m.stats.spe}`), hpBarSmall(m));
+			const btn = h('button', { class: 'switchbtn', onclick: () => act(c), 'data-switch': c.index }, spriteIcon(m), h('b', {}, m.name), h('span', { class: 'sw-types' }, ' ' + m.types.map(t => t.name).join('/')), h('br'), h('span', { class: 'muted' }, `HP ${m.hp}/${m.maxhp}　`, termify('素早さ'), ` ${m.stats.spe}`), hpBarSmall(m));
 			if (setting('benchTooltip')) attachTooltip(btn, () => monTooltip(v, 0, m), `hover:switch:${c.index}`);
 			return btn;
 		})));
@@ -774,6 +836,8 @@ async function act(choice) {
 	// チュートリアルでは、案内している手のほかは受け付けない。
 	if (demoExpect && !(demoExpect.type === choice.type && demoExpect.index === choice.index)) return demoHint(`ここでは「${demoExpect.label}」を押してください。`);
 	if (setting('confirmAction') && !confirm(`「${choice.label}」でよいですか？`)) return;
+	// 手を選んだあとは、プレイデモの「戻る」を押せなくする。
+	if (demoBox) demoBox.querySelectorAll('button').forEach(b => { b.disabled = true; });
 	g.busy = true;
 	g.target = null;
 	g.myTarget = null;
@@ -977,7 +1041,7 @@ function demoNotify(kind, detail) {
 	if (!demoWaiter || !demoWaiter.test(kind, detail)) return;
 	const resolve = demoWaiter.resolve;
 	demoWaiter = null;
-	resolve(false);
+	resolve('done');
 }
 
 function applyDemoHl() {
@@ -990,6 +1054,7 @@ function applyDemoHl() {
 	if (ok) ok.classList.add('demo-allow');
 	placeDemoBox(el);
 	if (setting('demoRingOnTop')) followDemoRing();
+	if (setting('demoArrow') && demoArrowSel) followDemoArrow();
 }
 
 // 強調した要素の上に、ほかの物より手前で光る枠を重ねる。説明や吹き出しで隠れても場所が分かる。
@@ -1037,21 +1102,32 @@ function closeDemo() {
 	if (demoBox) demoBox.remove();
 	demoBox = null;
 	demoAllow = null;
+	demoArrowSel = null;
 	demoHl = null;
 	demoWaiter = null;
 	demoExpect = null;
 	applyDemoHl();
 }
 
-// allow が true のときは、sel の要素だけを押せるようにする。
-function showDemoBox(content, sel, buttons, allow = false) {
+// allow が true のときは、sel の要素だけを押せるようにする。arrow は動く矢印で指す要素のセレクタ（省くと sel）。
+function showDemoBox(content, sel, buttons, allow = false, arrow = null) {
 	if (demoBox) demoBox.remove();
 	demoHl = sel || null;
 	demoAllow = allow ? demoHl : null;
+	demoArrowSel = allow ? (arrow || demoHl) : null;
 	applyDemoHl();
-	demoBox = h('div', { class: 'demo-box' }, h('div', { class: 'demo-text' }, [content].flat().map(c => typeof c === 'string' ? c.replace(/。(?=.)/g, '。\n') : c)), h('div', { class: 'demo-hint', id: 'demo-hint' }), h('div', { class: 'row' }, buttons));
+	const text = [content].flat().map(c => typeof c === 'string' ? demoText(c, allow) : c);
+	demoBox = h('div', { class: 'demo-box' }, h('div', { class: 'demo-text' }, text), h('div', { class: 'demo-hint', id: 'demo-hint' }), h('div', { class: 'row' }, buttons));
 	document.body.append(demoBox);
 	applyDemoHl();
+}
+
+// 文ごとに改行する。strong が true のときは、してほしい操作の言葉を太字にする。
+const DEMO_VERBS = /(クリックしてください|クリックすると|押してください|乗せてみてください|閉じてください)/;
+function demoText(text, strong) {
+	const lines = text.replace(/。(?=.)/g, '。\n');
+	if (!strong) return lines;
+	return lines.split(DEMO_VERBS).filter(Boolean).map(part => DEMO_VERBS.test(part) ? h('b', { class: 'demo-verb' }, part) : part);
 }
 
 function demoHint(text) {
@@ -1059,24 +1135,89 @@ function demoHint(text) {
 	if (el) el.textContent = text;
 }
 
+const demoBackButton = resolve => h('button', { class: 'secondary', onclick: () => resolve('back') }, '戻る');
+
 // 吹き出しを出して「次へ」を待つ。sel は強調する要素の CSS セレクタ。
-function demoSay(text, sel) {
-	return new Promise(resolve => showDemoBox(text, sel, h('button', { class: 'primary', onclick: () => resolve() }, '次へ')));
+// back が true なら「戻る」も出す。押したボタンに応じて 'next' か 'back' を返す。
+function demoSay(text, sel, back = false) {
+	return new Promise(resolve => showDemoBox(text, sel, [
+		back ? demoBackButton(resolve) : null,
+		h('button', { class: 'primary', onclick: () => resolve('next') }, '次へ')]));
 }
 
-// 吹き出しを出して、被験者の操作を待つ。test(kind, detail) が true になる操作で進む。
-// 「とばす」を押したときは true を返す。
-function demoWait(text, sel, test) {
+// 吹き出しを出して、被験者の操作を待つ。test(kind, detail) が true になる操作で 'done' を返す。
+// 「戻る」を押したときは 'back' を返す。arrow は矢印で指す要素（省くと sel）。
+function demoWait(text, sel, test, { back = false, arrow = null } = {}) {
 	return new Promise(resolve => {
 		demoWaiter = { test, resolve };
+		const goBack = () => { demoWaiter = null; demoExpect = null; resolve('back'); };
 		showDemoBox([h('div', { class: 'demo-do' }, 'やってみましょう'), text], sel,
-			h('button', { class: 'secondary', onclick: () => { demoWaiter = null; demoExpect = null; resolve(true); } }, 'とばす'), true);
+			back ? h('button', { class: 'secondary', onclick: goBack }, '戻る') : null, true, arrow);
 	});
+}
+
+// 押してほしい所の上（上の端に近いときは下）で、矢印を上下に動かす。
+let demoArrowEl = null;
+let demoArrowSel = null;
+let demoArrowLoop = false;
+function followDemoArrow() {
+	if (demoArrowLoop) return;
+	demoArrowLoop = true;
+	const step = () => {
+		if (!demoArrowSel || !demoBox || !setting('demoArrow')) {
+			if (demoArrowEl) demoArrowEl.remove();
+			demoArrowEl = null;
+			demoArrowLoop = false;
+			return;
+		}
+		const el = document.querySelector(demoArrowSel);
+		if (!demoArrowEl) {
+			demoArrowEl = h('div', { class: 'demo-arrow' }, h('span', {}, '▼'));
+			document.body.append(demoArrowEl);
+		}
+		demoArrowEl.style.display = el ? '' : 'none';
+		if (el) {
+			const r = el.getBoundingClientRect();
+			const below = r.top < 64;
+			demoArrowEl.classList.toggle('up', below);
+			demoArrowEl.firstChild.textContent = below ? '▲' : '▼';
+			Object.assign(demoArrowEl.style, { left: `${r.left + r.width / 2}px`, top: `${below ? r.bottom + 4 : r.top - 4}px` });
+		}
+		requestAnimationFrame(step);
+	};
+	step();
 }
 
 // 控えのうち、場にいなくて倒れていないポケモンの番号を返す。いなければ -1。
 function aliveBench(side) {
 	return side.mons.findIndex((m, i) => i !== side.active && m.hp > 0);
+}
+
+// 説明の手順を順に進める。手順の run(back) が 'back' を返したら1つ前に戻り、'skip' を返したら飛ばす。
+// commit の手順（技や交代を選ぶ手順）を終えたあとは、それより前には戻らない。
+async function runDemoSteps(steps) {
+	let i = 0, floor = 0, dir = 1;
+	while (i < steps.length) {
+		const st = steps[i];
+		const r = await st.run(Boolean(setting('demoBack')) && i > floor);
+		if (!S.game) return false;
+		if (r === 'skip') {
+			if (dir === 1 && (st.commit || i === floor)) floor = i + 1;
+			i += dir;
+			if (i < floor) { i = floor; dir = 1; }
+			continue;
+		}
+		if (r === 'back') { dir = -1; i = Math.max(floor, i - 1); continue; }
+		dir = 1;
+		if (st.commit) floor = i + 1;
+		i++;
+	}
+	return true;
+}
+
+// 開いている画面（ダメージ表など）を閉じる。
+function closeModals() {
+	document.querySelectorAll('#modal-root .modal-back').forEach(b => b.remove());
 }
 
 async function runDemo(done) {
@@ -1085,70 +1226,91 @@ async function runDemo(done) {
 		const g = S.game;
 		const ans = await api('GET', `/api/game/${g.meta.gameId}/answer`);
 		const live = setting('demoInteractive');
-		await demoSay(live
-			? '操作の練習です。実際の問題の画面を使い、正解の手順をあなた自身の操作で1手ずつ進めていきます。説明を読んだら「次へ」を押してください。「やってみましょう」と出たときは黄色い枠で囲んだ所を操作すると先へ進むことができます。'
-			: '操作の紹介です。実際の問題の画面で正解の手順を1手ずつ進めていきます。「次へ」を押すと先へ進むことができます。');
-		await demoSay(`上の帯には残りのターン数が出ます。この問題では、相手がどう動いても ${g.meta.length} ターン以内に確実に勝てる手順を探すことになります。`, '#game-header');
-		await demoSay('場の右上にいるのが相手のポケモンで、左下にいるのがあなたのポケモンです。それぞれの名前とタイプ、HP のバーと数値、素早さを見ることができます。', '#field');
-		if (setting('showOpponentMoves')) await demoSay('この欄には相手の場のポケモンの技が並んでいます。バーはあなたの場のポケモンの HP を表していて、斜線の部分がその技を受けたときに減る分です。欄の下には相手のポケモンの一覧があります。', '#side-foe');
-		await demoSay('下の欄では使う技か交代先のポケモンを選びます。技のボタンに出ているのは、相手の場のポケモンに与えるダメージです。欄の右側にはあなたのポケモンの一覧があります。', '#controls');
-
 		const foeSide = () => S.game.view.sides[1];
 		const meSide = () => S.game.view.sides[0];
+		// 戻ってきたときに、画面を手順の始めの状態にそろえる。
+		const setTarget = (key, value) => { if (S.game[key] !== value) { S.game[key] = value; renderGame(); } };
+		const say = (text, sel, enter) => ({ run: async back => { if (enter) await enter(); return demoSay(text, sel, back); } });
+		const wait = (text, sel, test, enter, arrow) => ({ run: async back => { if (enter) await enter(); return demoWait(text, sel, test, { back, arrow }); } });
+		const steps = [];
+
+		steps.push(say(live
+			? '操作の練習です。実際の問題の画面を使い、正解の手順をあなた自身の操作で1手ずつ進めていきます。説明を読んだら「次へ」を押します。「戻る」で前の説明に戻ることもできます。「やってみましょう」と出たときは、矢印の指す所を操作すると先へ進むことができます。'
+			: '操作の紹介です。実際の問題の画面で正解の手順を1手ずつ進めていきます。「次へ」を押すと先へ進むことができます。'));
+		steps.push(say(`上の帯には残りのターン数が出ます。この問題では、相手がどう動いても ${g.meta.length} ターン以内に確実に勝てる手順を探すことになります。`, '#game-header'));
+		steps.push(say('場の右上にいるのが相手のポケモンで、左下にいるのがあなたのポケモンです。それぞれの名前とタイプ、HP のバーと数値、素早さを見ることができます。', '#field'));
+		if (setting('showOpponentMoves')) steps.push(say('この欄には相手の場のポケモンの技が並んでいます。バーはあなたの場のポケモンの HP を表していて、斜線の部分がその技を受けたときに減る分です。欄の下には相手のポケモンの一覧があります。', '#side-foe'));
+		steps.push(say('下の欄では使う技か交代先のポケモンを選びます。技のボタンに出ているのは、相手の場のポケモンに与えるダメージです。欄の右側にはあなたのポケモンの一覧があります。', '#controls'));
+
 		const fb = aliveBench(foeSide());
 		if (setting('clickBenchToRetarget') && setting('showDamageOnMoves') && fb >= 0) {
 			const name = foeSide().mons[fb].name;
+			const active = foeSide().active;
 			if (live) {
-				await demoWait(`相手の控えの ${name} をクリックしてください。`, `[data-bench="1:${fb}"]`, () => S.game.target === fb);
-				await demoSay(`技のボタンのダメージが ${name} に当てたときの値に切り替わりました。相手が交代してくる場合を考えるときに使うことができます。`, '#controls');
-				await demoWait(`相手の場のポケモン（${foeSide().mons[foeSide().active].name}）をクリックすると元に戻ります。`, `[data-bench="1:${foeSide().active}"]`, () => S.game.target === null);
+				steps.push(wait(`相手の控えの ${name} をクリックしてください。`, `[data-bench="1:${fb}"]`, () => S.game.target === fb, () => setTarget('target', null)));
+				steps.push(say(`技のボタンのダメージが ${name} に当てたときの値に切り替わりました。相手が交代してくる場合を考えるときに使うことができます。`, '#controls', () => setTarget('target', fb)));
+				steps.push(wait(`相手の場のポケモン（${foeSide().mons[active].name}）をクリックすると元に戻ります。`, `[data-bench="1:${active}"]`, () => S.game.target === null, () => setTarget('target', fb)));
 			} else {
-				await demoSay('相手の控えのポケモンをクリックすると、技のボタンのダメージがそのポケモンに当てたときの値に切り替わります。相手の交代を読むときに使うことができます。', '#side-foe');
+				steps.push(say('相手の控えのポケモンをクリックすると、技のボタンのダメージがそのポケモンに当てたときの値に切り替わります。相手の交代を読むときに使うことができます。', '#side-foe'));
 			}
 		}
 		const mb = aliveBench(meSide());
 		if (setting('clickMyBenchToRetarget') && setting('showOpponentMoves') && setting('showOpponentDamage') && mb >= 0) {
 			const name = meSide().mons[mb].name;
+			const active = meSide().active;
 			if (live) {
-				await demoWait(`今度はあなたの控えの ${name} をクリックしてください。`, `[data-bench="0:${mb}"]`, () => S.game.myTarget === mb);
-				await demoSay(`相手の技のダメージが ${name} の受ける値に切り替わりました。交代先を選ぶときの手がかりになります。`, '#side-foe');
-				await demoWait(`あなたの場のポケモン（${meSide().mons[meSide().active].name}）をクリックすると元に戻ります。`, `[data-bench="0:${meSide().active}"]`, () => S.game.myTarget === null);
+				steps.push(wait(`今度はあなたの控えの ${name} をクリックしてください。`, `[data-bench="0:${mb}"]`, () => S.game.myTarget === mb, () => { setTarget('target', null); setTarget('myTarget', null); }));
+				steps.push(say(`相手の技のダメージが ${name} の受ける値に切り替わりました。交代先を選ぶときの手がかりになります。`, '#side-foe', () => setTarget('myTarget', mb)));
+				steps.push(wait(`あなたの場のポケモン（${meSide().mons[active].name}）をクリックすると元に戻ります。`, `[data-bench="0:${active}"]`, () => S.game.myTarget === null, () => setTarget('myTarget', mb)));
 			} else {
-				await demoSay('あなたの控えのポケモンをクリックすると、相手の技のダメージがそのポケモンの受ける値に切り替わります。交代先を選ぶときの手がかりになります。', '#side-me');
+				steps.push(say('あなたの控えのポケモンをクリックすると、相手の技のダメージがそのポケモンの受ける値に切り替わります。交代先を選ぶときの手がかりになります。', '#side-me'));
 			}
 		}
 		if (setting('benchTooltip')) {
-			const text = '控えのポケモンや交代のボタンにマウスを乗せると詳しい説明が出ます。説明には、そのポケモンの技と相手の場のポケモンとのあいだのダメージがのっています。';
-			if (live) await demoWait(text + 'あなたのポケモンのどれかにマウスを乗せてみてください。', '#side-me', k => k.startsWith('hover:0:') || k.startsWith('hover:switch:'));
-			else await demoSay(text, '#side-me');
+			const text = '控えのポケモンや交代のボタンにマウスを乗せると詳しい説明が出ます。説明には、そのポケモンの技と相手の場のポケモンとのあいだのダメージがのっています。'
+				+ (setting('tooltipOnLog') ? '説明はバトルログの欄に重ねて出ます。' : '');
+			const reset = () => { setTarget('target', null); setTarget('myTarget', null); };
+			if (live) steps.push(wait(text + 'あなたのポケモンのどれかにマウスを乗せてみてください。', '#side-me', k => k.startsWith('hover:0:') || k.startsWith('hover:switch:'), reset));
+			else steps.push(say(text, '#side-me', reset));
 		}
 		if (setting('enableDamageTable')) {
 			if (live) {
-				await demoWait('右上のメニューにある「ダメージ表」を押してください。すべてのポケモンどうしのダメージを表で見ることができます。', '#menu', k => k === 'damageTable');
-				await demoWait('表の上のタブを押すと「あなた → 相手」と「相手 → あなた」を切り替えられます。見終わったら「閉じる」で表を閉じてください。', null, k => k === 'modalClose');
-				if (setting('menuTypeChart')) await demoSay('同じメニューからはタイプ相性表とルールもいつでも開くことができます。', '#menu');
+				steps.push(wait('右上のメニューにある「ダメージ表」を押してください。すべてのポケモンどうしのダメージを表で見ることができます。', '#menu', k => k === 'damageTable', closeModals, '#menu-damage'));
+				steps.push(wait('表の上のタブを押すと「あなた → 相手」と「相手 → あなた」を切り替えられます。見終わったら「閉じる」で表を閉じてください。', null, k => k === 'modalClose',
+					async () => { if (!document.querySelector('#modal-root .modal-back')) await openDamageTable(); }, '#modal-root .modal-head button'));
+				if (setting('menuTypeChart')) steps.push(say('同じメニューからはタイプ相性表とルールもいつでも開くことができます。', '#menu', closeModals));
 			} else {
-				await demoSay('右上のメニューからは、すべてのポケモンどうしのダメージをまとめたダメージ表とタイプ相性表をいつでも開くことができます。', '#menu');
+				steps.push(say('右上のメニューからは、すべてのポケモンどうしのダメージをまとめたダメージ表とタイプ相性表をいつでも開くことができます。', '#menu'));
 			}
 		}
 
 		for (const st of ans.steps) {
-			if (!S.game) return;
-			const choice = S.game.view.choices.find(c => c.type === st.p1Action.type && c.index === st.p1Action.index);
-			const sel = choice.type === 'move' ? `[data-move="${choice.index}"]` : `[data-switch="${choice.index}"]`;
-			await playDemoStep(live, choice, st.p1, sel, `${st.turn}ターン目は「${st.p1}」を選びます。`);
-			if (S.game.view.phase === 'replace' && st.p1Replace !== undefined) {
+			steps.push({ commit: true, run: back => {
+				const choice = S.game.view.choices.find(c => c.type === st.p1Action.type && c.index === st.p1Action.index);
+				const sel = choice.type === 'move' ? `[data-move="${choice.index}"]` : `[data-switch="${choice.index}"]`;
+				return playDemoStep(live, choice, st.p1, sel, `${st.turn}ターン目は「${st.p1}」を選びます。`, back);
+			} });
+			steps.push({ commit: true, run: back => {
+				if (S.game.view.phase !== 'replace' || st.p1Replace === undefined) return 'skip';
 				const rc = S.game.view.choices.find(c => c.index === st.p1Replace);
-				await playDemoStep(live, rc, rc.label, '#controls', 'あなたのポケモンが倒れたので次に出すポケモンを選びます。');
-			}
-			if (S.game.view.phase !== 'won') await demoSay('あなたと相手の動きとその結果は右のバトルログに残ります。', '#log');
+				return playDemoStep(live, rc, rc.label, '#controls', 'あなたのポケモンが倒れたので次に出すポケモンを選びます。', back);
+			} });
+			steps.push({ run: back => S.game.view.phase === 'won' ? 'skip' : demoSay('あなたと相手の動きとその結果は右のバトルログに残ります。', '#log', back) });
 		}
 		const last = '勝てば正解です。間違えた手を選んで残りのターン数以内に確実に勝てなくなると失敗になります。失敗したときは、もう一度挑戦するかあきらめて解答を見るかを選ぶことができます。これで操作の練習は終わりです。';
-		const again = setting('demoReplay')
-			? await new Promise(resolve => showDemoBox(last + 'もう一度見たいときは「もう一度見る」を押してください。', '#controls', [
-				h('button', { class: 'secondary', onclick: () => resolve(true) }, 'もう一度見る'),
-				h('button', { class: 'primary', onclick: () => resolve(false) }, '終わる')]))
-			: (await demoSay(last, '#controls'), false);
+		let again = false;
+		steps.push({ run: async back => {
+			const r = setting('demoReplay')
+				? await new Promise(resolve => showDemoBox(last + 'もう一度見たいときは「もう一度見る」を押してください。', '#controls', [
+					back ? demoBackButton(resolve) : null,
+					h('button', { class: 'secondary', onclick: () => resolve('again') }, 'もう一度見る'),
+					h('button', { class: 'primary', onclick: () => resolve('end') }, '終わる')]))
+				: await demoSay(last, '#controls', back);
+			again = r === 'again';
+			return r;
+		} });
+
+		if (!await runDemoSteps(steps)) return;
 		closeDemo();
 		api('POST', `/api/game/${S.game.meta.gameId}/rate`, { skip: true }).catch(() => {});
 		S.game = null;
@@ -1158,18 +1320,19 @@ async function runDemo(done) {
 	} catch (e) { showError(e); }
 }
 
-// 1手を進める。チュートリアルでは被験者に押してもらい、とばしたときと自動のときはこちらで選ぶ。
-async function playDemoStep(live, choice, label, sel, text) {
+// 1手を進める。チュートリアルでは被験者に押してもらい、自動のときはこちらで選ぶ。
+// 手を選ぶ前に「戻る」を押したときは 'back' を返す。
+async function playDemoStep(live, choice, label, sel, text, back = false) {
 	if (!live) {
-		await demoSay(text, sel);
+		if (await demoSay(text, sel, back) === 'back') return 'back';
 		closeDemo();
 		await act(choice);
-		return;
+		return 'done';
 	}
 	demoExpect = { type: choice.type, index: choice.index, label };
-	const skipped = await demoWait(`${text}「${label}」のボタンを押してください。`, sel, k => k === 'actDone');
+	const r = await demoWait(`${text}「${label}」のボタンを押してください。`, sel, k => k === 'actDone', { back });
 	demoExpect = null;
-	if (skipped) await act(choice);
+	return r;
 }
 
 // ---------- 操作確認 ----------
@@ -1191,17 +1354,19 @@ async function runQuickGuide() {
 		['#log', '選んだ手とその結果は右のバトルログに残り、あとから見返すこともできます。'],
 	].filter(st => st && document.querySelector(st[0]));
 	let stop = false;
-	for (let i = 0; i < steps.length && !stop && S.game; i++) {
+	for (let i = 0; i < steps.length && !stop && S.game;) {
 		const [sel, text] = steps[i];
-		await new Promise(resolve => {
+		const r = await new Promise(resolve => {
 			// ms が 0 のときは自動で進めず、ボタンを待つ。
-			const timer = ms > 0 ? setTimeout(resolve, ms) : null;
-			const go = () => { clearTimeout(timer); resolve(); };
+			const timer = ms > 0 ? setTimeout(() => resolve('next'), ms) : null;
+			const go = v => { clearTimeout(timer); resolve(v); };
 			showDemoBox([h('div', { class: 'demo-do guide' }, `操作確認 ${i + 1}/${steps.length}`), text,
 				ms > 0 ? h('div', { class: 'guide-bar' }, h('div', { style: { animationDuration: `${ms}ms` } })) : null], sel, [
-				h('button', { class: 'secondary', onclick: () => { stop = true; go(); } }, '閉じる'),
-				h('button', { class: 'primary', onclick: go }, i === steps.length - 1 ? '終わる' : '次へ')]);
+				h('button', { class: 'secondary', onclick: () => { stop = true; go('next'); } }, '閉じる'),
+				setting('demoBack') && i > 0 ? h('button', { class: 'secondary', onclick: () => go('back') }, '戻る') : null,
+				h('button', { class: 'primary', onclick: () => go('next') }, i === steps.length - 1 ? '終わる' : '次へ')]);
 		});
+		i += r === 'back' ? -1 : 1;
 	}
 	closeDemo();
 	guideRunning = false;
@@ -1266,7 +1431,7 @@ function fitStage(done = false) {
 	if (ctl && gap > 0) ctl.style.minHeight = `${(ctl.getBoundingClientRect().height + gap) / cur}px`;
 	// 見出し、ログ、上の帯の文字も同じ倍率で大きくし、その分だけ場の倍率を測り直す。
 	// 説明を出している間に倍率が変わったときは、置き直す。
-	placeTooltip(tooltipAnchor);
+	if (tooltipAnchor && tooltipOf.has(tooltipAnchor)) placeTooltip(tooltipAnchor, tooltipOf.get(tooltipAnchor).kind);
 	if (setting('scaleOtherText') && !done && z > 1) {
 		document.body.style.setProperty('--uiz', Math.min(3, z));
 		fitStage(true);
@@ -1278,6 +1443,7 @@ if (document.fonts) document.fonts.ready.then(() => fitStage());
 
 function applyFont(key = setting('fontFamily')) {
 	document.body.classList.toggle('round-corners', Boolean(setting('roundCorners')));
+	document.body.classList.toggle('btn3d', Boolean(setting('buttonLook')));
 	const font = SettingsSchema.FONTS.find(f => f.key === key) || SettingsSchema.FONTS.find(f => f.key === 'system');
 	const link = document.getElementById('webfont');
 	if (font.query) {

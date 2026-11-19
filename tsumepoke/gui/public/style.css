@@ -263,3 +263,44 @@ body.demo-blink .demo-hl { animation: demo-blink 1.1s ease-in-out infinite; }
 .demo-ring { position: fixed; z-index: 80; pointer-events: none; box-sizing: border-box; border: 4px solid rgba(255, 170, 0, .75); border-radius: calc(8px * var(--round)); box-shadow: 0 0 14px 4px rgba(255, 150, 0, .35), inset 0 0 14px 2px rgba(255, 150, 0, .25); }
 body.demo-blink .demo-ring { animation: demo-ring 1.1s ease-in-out infinite; }
 @keyframes demo-ring { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+
+/* 押せるボタンらしい見た目（設定の buttonLook）。ごく弱いグラデーションと薄い影を付ける。角を丸くしない設定でも、ボタンの角だけは少し丸める。 */
+body.btn3d :is(.primary, .secondary, .danger) { border-radius: max(5px, calc(6px * var(--round))); box-shadow: 0 1px 2px rgba(0,0,0,.12); transition: transform .06s, box-shadow .06s, filter .1s; }
+body.btn3d .primary { background: linear-gradient(#3a7be0, #2f6fd6); border: 1px solid #2a62bf; }
+body.btn3d .secondary { background: linear-gradient(#ffffff, #f5f7fa); border: 1px solid #b9c1ce; }
+body.btn3d .danger { background: linear-gradient(#ffffff, #fdf6f6); }
+body.btn3d :is(.primary, .secondary, .danger, .switchbtn, #menu button, .tabs button):hover:not(:disabled) { filter: brightness(1.04); }
+body.btn3d .movebtn { border-radius: max(6px, calc(8px * var(--round))); background-image: linear-gradient(rgba(255,255,255,.07), rgba(0,0,0,.03)) !important; box-shadow: 0 1px 3px rgba(0,0,0,.18); transition: transform .06s, box-shadow .06s; }
+body.btn3d .switchbtn { border-radius: max(6px, calc(8px * var(--round))); background: linear-gradient(#ffffff, #f4f6f9); box-shadow: 0 1px 2px rgba(0,0,0,.10); transition: transform .06s, box-shadow .06s; }
+body.btn3d #menu button, body.btn3d .tabs button { border-radius: max(4px, calc(6px * var(--round))); box-shadow: 0 1px 2px rgba(0,0,0,.20); }
+body.btn3d :is(.primary, .secondary, .danger, .movebtn, .switchbtn, #menu button, .tabs button):active:not(:disabled) { transform: translateY(1px); box-shadow: none; }
+
+/* 技の名前は控えめにして、ダメージの数字を目立たせる。 */
+.movebtn .mname { font-size: 13.5px; font-weight: 600; opacity: .92; }
+.movebtn .mdmg { font-size: 13px; font-weight: 600; margin-top: 3px; }
+.movebtn .mdmg .dmgnum { font-size: 19px; font-weight: 800; letter-spacing: .02em; }
+.foe-move .mvname { color: #4a5263; }
+.fm-dmg .dmgnum, .fm-dmg b.dmgnum { font-size: 15px; font-weight: 800; }
+
+/* どちらが先に動くか */
+.tag.speed { font-weight: 800; font-size: 13px; padding: 1px 8px; }
+.tag.speed.fast { background: #ffe0a3; border-color: #e0952a; color: #8a4500; }
+.tag.speed.slow { background: #dce8ff; border-color: #7d9fd8; color: #1f4b99; }
+.tag.speed.same { background: #ececec; border-color: #b0b0b0; color: #444; }
+
+/* 用語の解説 */
+.term { text-decoration: underline dotted; text-underline-offset: 3px; cursor: help; }
+.tooltip.term-tip { width: 300px; font-size: 13px; line-height: 1.6; }
+/* ポケモンの詳しい情報をバトルログの欄に重ねて出す。 */
+.tooltip.on-log { overflow-y: auto; border: 2px solid #8893a7; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+
+/* プレイデモ：「やってみましょう」のあとで改行し、してほしい操作を太字にする。 */
+.demo-do { display: table; }
+.demo-verb { font-weight: 800; color: #b34700; }
+/* 押してほしい所を指す、上下に動く矢印 */
+.demo-arrow { position: fixed; z-index: 85; pointer-events: none; transform: translate(-50%, -100%); }
+.demo-arrow.up { transform: translate(-50%, 0); }
+.demo-arrow span { display: block; font-size: 38px; line-height: 1; color: #ff8a00; text-shadow: 0 0 3px #fff, 0 0 6px #fff, 0 2px 4px rgba(0,0,0,.35); animation: demo-arrow-bob .8s ease-in-out infinite; }
+.demo-arrow.up span { animation-name: demo-arrow-bob-up; }
+@keyframes demo-arrow-bob { 0%, 100% { transform: translateY(-10px); } 50% { transform: translateY(0); } }
+@keyframes demo-arrow-bob-up { 0%, 100% { transform: translateY(10px); } 50% { transform: translateY(0); } }
